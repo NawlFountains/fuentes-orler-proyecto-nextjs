@@ -12,6 +12,8 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 
 // TODO: Dynamically import product types from DB
+
+// TODO: make category carrusel for mobile
 const links = [
   { name: 'Shirts', href: '/products/shirts' },
   {
@@ -36,7 +38,7 @@ export default function NavLinks() {
               },
             )}
           >
-            <p className="hidden md:block">{link.name}</p>
+            <p className="md:block">{link.name}</p>
           </Link>
         );
       })}
