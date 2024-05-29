@@ -1,4 +1,4 @@
-import SideNav from "../components/products/sidebar";
+import SideNav from "../components/search/sidebar";
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

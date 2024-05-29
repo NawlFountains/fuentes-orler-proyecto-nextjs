@@ -15,10 +15,10 @@ import clsx from 'clsx';
 
 // TODO: make category carrusel for mobile
 const links = [
-  { name: 'Shirts', href: '/products/shirts' },
+  { name: 'Shirts', href: '/search/shirts' },
   {
     name: 'Shoes',
-    href: '/products/shoes',
+    href: '/search/shoes',
   },
 ];
 

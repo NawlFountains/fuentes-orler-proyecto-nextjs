@@ -14,7 +14,7 @@ const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
   {
     name: 'Products',
-    href: '/products',
+    href: '/search',
     icon: ArchiveBoxIcon,
   },
 ];
