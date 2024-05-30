@@ -238,3 +238,11 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
+
+export async function fetchProductTypes() {
+  //TODO : request from DB
+
+  //Dummy test
+  const productTypes = ['shoes', 'shirts', 'jackets', 'sweatshirts'];
+  return productTypes;
+}

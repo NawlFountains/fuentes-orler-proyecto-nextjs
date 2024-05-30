@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import NavLinks from '@/app/ui/dashboard/nav-links';
 import StoreLogo from '@/app/ui/store-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
@@ -6,8 +5,8 @@ import { signOut } from '@/auth';
 
 export default function Navbar() {
   return (
-    <div className="relative flex items-center justify-between p-4 lg:px-6">
-        <div className="w-32 md:w-40">
+    <div className="grid md:flex items-center md:justify-between py-2">
+        <div className="mx-auto my-2 md:w-40">
           <StoreLogo />
         </div>
       <div className="flex w-full items-center">
