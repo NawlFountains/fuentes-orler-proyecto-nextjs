@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
@@ -22,7 +21,6 @@ const links = [
     href: '/invoices',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Customers', href: '/customers', icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {

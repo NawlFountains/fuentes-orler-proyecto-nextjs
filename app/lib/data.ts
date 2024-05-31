@@ -7,9 +7,20 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  Product,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
+
+const testProducts = [
+  { id: '1', title: 'Blue jeans', type: 'pants', description: 'Blue jeans description', price: 1000 },
+  { id: '2', title: 'Brown pants', type : 'pants', description: 'Brown pants description',  price: 2000 },
+  { id: '3',title: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description',  price: 3000 },
+  { id: '4',title: 'Piluso', type: 'hat', description: 'Piluso description',  price: 4000 },
+  { id: '5',title: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description',  price: 5000 },
+  { id: '6',title: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description',  price: 6000 },
+  { id: '7',title: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description',  price: 7000 },
+];
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
@@ -243,6 +254,38 @@ export async function fetchProductTypes() {
   //TODO : request from DB
 
   //Dummy test
-  const productTypes = ['shoes', 'shirts', 'jackets', 'sweatshirts'];
+  const productTypes = ['pants', 'tshirt', 'hat','shoes'];
   return productTypes;
+}
+export async function fetchProducts() {
+  //TODO : request from DB
+
+  //Dummy test with titles (Blue jeans, Brown pants, Fit Tshirt black, Piluso , Tshirt white)
+  return testProducts;
+}
+export async function fetchProduct(product_id:string) {
+  //TODO : request from DB
+
+  //Dummy test
+  for (let i = 0; i < testProducts.length; i++) {
+    if (testProducts[i].id === product_id) {
+      let product = testProducts[i]
+      return product;
+    }
+  }
+}
+
+export async function fetchProductsByType(product_type:string) {
+  //TODO : request from DB
+
+  //Dummy test
+  let a = 0;
+  let products : Product[] = [];
+  for (let i = 0; i < testProducts.length; i++) {
+    if (testProducts[i].type === product_type) {
+      products[a] = testProducts[i];
+      a = a + 1;
+    }
+  }
+  return products;
 }

@@ -11,22 +11,37 @@ import clsx from 'clsx';
 // TODO: Dynamically import product types from DB
 
 // TODO: make category carrusel for mobile
-let links: any[] = [];
 async function generateLinks() {
   try {
-    const types = await fetchProductTypes();
-    for (let i = 0; i < types.length; i++) {
-      links[i] = { name: types[i], href: `/search/${types[i]}` };
-    }
-    console.log(links);
+      // Wait for the types to be fetched
+      const types = await fetchProductTypes();
+      
+      let links = [];
+      // Generate links from the fetched types
+      for (let i = 0; i < types.length; i++) {
+          links[i] = { name: types[i], href: `/search/${types[i]}` };
+      }
+      
+      console.log(links);
+      
+      return links;
   } catch (error) {
-    console.error('Error fetching product types:', error);
+      console.error('Error fetching product types:', error);
+      // Throw error or handle it accordingly
+      throw error;
   }
 }
 
-export default function NavLinks() {
+export default async function NavLinks() {
   const pathname = usePathname();
-  generateLinks();
+  const types = await fetchProductTypes();
+
+  let links = [];
+      // Generate links from the fetched types
+      for (let i = 0; i < types.length; i++) {
+          links[i] = { name: types[i], href: `/search/${types[i]}` };
+      }
+      
   return (
     <>
       {links.map((link) => {

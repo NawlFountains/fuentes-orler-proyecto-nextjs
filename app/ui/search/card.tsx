@@ -1,37 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
   
-  export default async function CardWrapper() {
-    const fetchPrice = 3000;
-    return (
-      <>
-        {/* NOTE: comment in this code when you get to this point in the course */}
-        
-        <Card title="test shirt" description="Test description" price={fetchPrice} />
-      </>
-    );
-  }
-  
-  export function Card({
+  export default async function Card({
+    id,
     title,
+    type,
     description,
     price,
   }: {
+    id: string;
     title: string;
+    type: string;
     description: string;
     price: number;
   }) {
     let pathImage = title.toLowerCase();
     pathImage = pathImage.replaceAll(" ", "-");
     return (
-        <Link href={`/products/${pathImage}`}>
-      <div className="rounded-xl p-2 shadow-sm border border-gray-200">
-        <div className="flex p-4">
-            <Image src={`/${pathImage}.jpeg`} alt={title} width={200} height={150} className="rounded-xl mx-auto" />
+        <Link href={`/products/${id}`}>
+      <div className="rounded-xl p-2 shadow-sm border border-gray-200 space-y-2">
+        <div className="flex">
+            <Image src={`/${pathImage}.jpg`} alt={title} width={200} height={300} className="rounded-xl mx-auto" />
         </div>
-        <h3 className="text-sm text-gray-300 text-center">{title}</h3>
-        <p className="text-sm text-gray-500">{description}</p>
-        <p className="text-sm text-gray-500">{price}</p>
+        <div className="flex flex-col mx-4 " >
+          <h2 className="text-md text-gray-300 md:text-left text-center">{title}</h2>
+          <p className="text-sm text-gray-500 md:text-left text-center">${price}</p>
+        </div>
       </div>
       </Link>
     );
