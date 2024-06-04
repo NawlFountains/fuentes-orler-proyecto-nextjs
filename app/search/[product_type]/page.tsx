@@ -12,10 +12,9 @@ export default async function Page({ params }: { params: { product_type: string 
         <Card
             key={product.id}
             id={product.id}
-            title={product.title}
-            type={product.type}
-            description={product.description}
+            name={product.name}
             price={product.price}
+            imageURL={product.imageURL}
           />
         ))}
       </Suspense>

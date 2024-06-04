@@ -13,37 +13,37 @@ import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
 const testProducts = [
-  { id: '1', title: 'Blue jeans', type: 'pants', description: 'Blue jeans description'},
-  { id: '2', title: 'Brown pants', type : 'pants', description: 'Brown pants description'},
-  { id: '3',title: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description'},
-  { id: '4',title: 'Piluso', type: 'hat', description: 'Piluso description'},
-  { id: '5',title: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description'},
-  { id: '6',title: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description'},
-  { id: '7',title: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description'},
+  { id: '1', name: 'Blue jeans', type: 'pants', description: 'Blue jeans description', imageURL: 'https://res.cloudinary.com/dzbaziutc/image/upload/v1717533921/blue-jeans_ays0r6.jpg'},
+  { id: '2', name: 'Brown pants', type : 'pants', description: 'Brown pants description'},
+  { id: '3',name: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description'},
+  { id: '4',name: 'Piluso', type: 'hat', description: 'Piluso description'},
+  { id: '5',name: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description'},
+  { id: '6',name: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description'},
+  { id: '7',name: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description'},
 ];
 
 const testVariants = [
-  { id : '1', product_id: '1', color: 'blue', size: 's', price: 1000 },
-  { id : '2', product_id: '1', color: 'brown', size: 'm', price: 1000 },
-  { id : '3', product_id: '1', color: 'blue', size: 'l', price: 1000 },
-  { id : '4', product_id: '2', color: 'brown', size: 's', price: 2000 },
-  { id : '5', product_id: '2', color: 'brown', size: 'm', price: 2000 },
-  { id : '6', product_id: '2', color: 'brown', size: 'l', price: 2000 },
-  { id : '7', product_id: '3', color: 'black', size: 's', price: 3000 },
-  { id : '8', product_id: '3', color: 'black', size: 'm', price: 3000 },
-  { id : '9', product_id: '3', color: 'black', size: 'l', price: 3000 },
-  { id : '10', product_id: '4', color: 'white', size: 's', price: 1000 },
-  { id : '11', product_id: '4', color: 'white', size: 'm', price: 1000 },
-  { id : '12', product_id: '4', color: 'white', size: 'l', price: 1000 },
-  { id : '13', product_id: '5', color: 'white', size: 's', price: 1000 },
-  { id : '14', product_id: '5', color: 'white', size: 'm', price: 1000 },
-  { id : '15', product_id: '5', color: 'white', size: 'l', price: 1000 },
-  { id : '16', product_id: '6', color: 'black', size: 's', price: 1000 },
-  { id : '17', product_id: '6', color: 'black', size: 'm', price: 1000 },
-  { id : '18', product_id: '6', color: 'black', size: 'l', price: 1000 },
-  { id : '19', product_id: '7', color: 'white', size: 's', price: 1000 },
-  { id : '20', product_id: '7', color: 'white', size: 'm', price: 1000 },
-  { id : '21', product_id: '7', color: 'white', size: 'l', price: 1000 },
+  { id : '1', product_id: '1', color: 'blue', size: 's', price: 1000 , imagePath: null},
+  { id : '2', product_id: '1', color: 'brown', size: 'm', price: 1000, imagePath: null },
+  { id : '3', product_id: '1', color: 'blue', size: 'l', price: 1000, imagePath: null },
+  { id : '4', product_id: '2', color: 'brown', size: 's', price: 200, imagePath: null},
+  { id : '5', product_id: '2', color: 'brown', size: 'm', price: 20, imagePath: null},
+  { id : '6', product_id: '2', color: 'brown', size: 'l', price: 200, imagePath: null},
+  { id : '7', product_id: '3', color: 'black', size: 's', price: 300, imagePath: null},
+  { id : '8', product_id: '3', color: 'black', size: 'm', price: 300, imagePath: null},
+  { id : '9', product_id: '3', color: 'black', size: 'l', price: 300, imagePath: null},
+  { id : '18', product_id: '6', color: 'black', size: 'l', price: 10, imagePath: null},
+  { id : '10', product_id: '4', color: 'white', size: 's', price: 10, imagePath: null},
+  { id : '11', product_id: '4', color: 'white', size: 'm', price: 10, imagePath: null},
+  { id : '12', product_id: '4', color: 'white', size: 'l', price: 10, imagePath: null},
+  { id : '13', product_id: '5', color: 'white', size: 's', price: 10, imagePath: null},
+  { id : '14', product_id: '5', color: 'white', size: 'm', price: 10, imagePath: null},
+  { id : '15', product_id: '5', color: 'white', size: 'l', price: 10, imagePath: null},
+  { id : '16', product_id: '6', color: 'black', size: 's', price: 10, imagePath: null},
+  { id : '17', product_id: '6', color: 'black', size: 'm', price: 10, imagePath: null},
+  { id : '19', product_id: '7', color: 'white', size: 's', price: 10, imagePath: null},
+  { id : '20', product_id: '7', color: 'white', size: 'm', price: 100, imagePath: null },
+  { id : '21', product_id: '7', color: 'white', size: 'l', price: 1000, imagePath: null },
 ];
 
 export async function fetchRevenue() {
@@ -163,7 +163,7 @@ export async function fetchFilteredInvoices(
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchProductsPages(query: string) {
   noStore();
   try {
     const count = await sql`SELECT COUNT(*)
@@ -177,7 +177,8 @@ export async function fetchInvoicesPages(query: string) {
       invoices.status ILIKE ${`%${query}%`}
   `;
 
-    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    // const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(Number(testVariants.length) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
@@ -284,8 +285,20 @@ export async function fetchProductTypes() {
 export async function fetchProducts() {
   //TODO : request from DB
 
-  //Dummy test with titles (Blue jeans, Brown pants, Fit Tshirt black, Piluso , Tshirt white)
-  return testProducts;
+  //Dummy test with names (Blue jeans, Brown pants, Fit Tshirt black, Piluso , Tshirt white)
+  let products : Product[] = [];
+  for (let i = 0; i < testProducts.length; i++) {
+    let productVariant = await fetchAnyVariant(testProducts[i].id);
+    products[i] = {
+      id : testProducts[i].id,
+      name: testProducts[i].name,
+      type: testProducts[i].type,
+      description: testProducts[i].description,
+      imageURL: testProducts[i].imageURL,
+      price: productVariant.price,
+    }
+  }
+  return products;
 }
 export async function fetchProduct(product_id:string) {
   //TODO : request from DB
@@ -307,10 +320,20 @@ export async function fetchProductsByType(product_type:string) {
   let products : Product[] = [];
   for (let i = 0; i < testProducts.length; i++) {
     if (testProducts[i].type === product_type) {
-      products[a] = testProducts[i];
+      let productVariant = await fetchAnyVariant(testProducts[i].id);
+      products[a] = {
+        id : testProducts[i].id,
+        name: testProducts[i].name,
+        type: testProducts[i].type,
+        description: testProducts[i].description,
+        imageURL: testProducts[i].imageURL,
+        price: productVariant.price,
+      }
       a = a + 1;
     }
   }
+  //Add a variant for each product
+
   return products;
 }
 
@@ -341,6 +364,22 @@ export async function fetchAnyVariant(variant_id:string) {
   //TODO : request from DB variant table
   for (let i = 0; i < testVariants.length; i++) {
     if (testVariants[i].id === variant_id) {
+      if (testVariants[i].imagePath  == null) {
+        //IF no variant photo go to default
+        for (let j = 0; j < testProducts.length; j++) {
+          if (testProducts[j].id === testVariants[i].product_id) {
+            let product = {
+              id: testProducts[i].id,
+              product_id : testVariants[i].product_id,
+              color : testVariants[i].color,
+              size : testVariants[i].size,
+              price : testVariants[i].price,
+              imageULR: testProducts[j].imageURL
+            }
+            return product;
+          }
+        }
+      }
       return testVariants[i];
     }
   }

@@ -1,3 +1,4 @@
+'use client'
 import { fetchProductSizes, fetchProductColors } from "@/app/lib/data";
 
 export async function SizeToggle( {
