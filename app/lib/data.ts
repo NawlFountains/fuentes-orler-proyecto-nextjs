@@ -13,13 +13,37 @@ import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
 const testProducts = [
-  { id: '1', title: 'Blue jeans', type: 'pants', description: 'Blue jeans description', price: 1000 },
-  { id: '2', title: 'Brown pants', type : 'pants', description: 'Brown pants description',  price: 2000 },
-  { id: '3',title: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description',  price: 3000 },
-  { id: '4',title: 'Piluso', type: 'hat', description: 'Piluso description',  price: 4000 },
-  { id: '5',title: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description',  price: 5000 },
-  { id: '6',title: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description',  price: 6000 },
-  { id: '7',title: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description',  price: 7000 },
+  { id: '1', title: 'Blue jeans', type: 'pants', description: 'Blue jeans description'},
+  { id: '2', title: 'Brown pants', type : 'pants', description: 'Brown pants description'},
+  { id: '3',title: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description'},
+  { id: '4',title: 'Piluso', type: 'hat', description: 'Piluso description'},
+  { id: '5',title: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description'},
+  { id: '6',title: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description'},
+  { id: '7',title: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description'},
+];
+
+const testVariants = [
+  { id : '1', product_id: '1', color: 'blue', size: 's', price: 1000 },
+  { id : '2', product_id: '1', color: 'brown', size: 'm', price: 1000 },
+  { id : '3', product_id: '1', color: 'blue', size: 'l', price: 1000 },
+  { id : '4', product_id: '2', color: 'brown', size: 's', price: 2000 },
+  { id : '5', product_id: '2', color: 'brown', size: 'm', price: 2000 },
+  { id : '6', product_id: '2', color: 'brown', size: 'l', price: 2000 },
+  { id : '7', product_id: '3', color: 'black', size: 's', price: 3000 },
+  { id : '8', product_id: '3', color: 'black', size: 'm', price: 3000 },
+  { id : '9', product_id: '3', color: 'black', size: 'l', price: 3000 },
+  { id : '10', product_id: '4', color: 'white', size: 's', price: 1000 },
+  { id : '11', product_id: '4', color: 'white', size: 'm', price: 1000 },
+  { id : '12', product_id: '4', color: 'white', size: 'l', price: 1000 },
+  { id : '13', product_id: '5', color: 'white', size: 's', price: 1000 },
+  { id : '14', product_id: '5', color: 'white', size: 'm', price: 1000 },
+  { id : '15', product_id: '5', color: 'white', size: 'l', price: 1000 },
+  { id : '16', product_id: '6', color: 'black', size: 's', price: 1000 },
+  { id : '17', product_id: '6', color: 'black', size: 'm', price: 1000 },
+  { id : '18', product_id: '6', color: 'black', size: 'l', price: 1000 },
+  { id : '19', product_id: '7', color: 'white', size: 's', price: 1000 },
+  { id : '20', product_id: '7', color: 'white', size: 'm', price: 1000 },
+  { id : '21', product_id: '7', color: 'white', size: 'l', price: 1000 },
 ];
 
 export async function fetchRevenue() {
@@ -288,4 +312,36 @@ export async function fetchProductsByType(product_type:string) {
     }
   }
   return products;
+}
+
+export async function fetchProductSizes(product_id:string) {
+  //TODO : request from DB variant table
+  let availableSizes = new Set<String>();
+  for (let i = 0; i < testVariants.length; i++) {
+    if (testVariants[i].product_id === product_id) {
+      availableSizes.add(testVariants[i].size);
+    }
+  }
+  return Array.from(availableSizes);
+}
+
+export async function fetchProductColors(product_id:string) {
+  //TODO : request from DB variant table
+  let availableColors = new Set<String>();
+  for (let i = 0; i < testVariants.length; i++) {
+    if (testVariants[i].product_id === product_id) {
+      availableColors.add(testVariants[i].color);
+    }
+  }
+  console.log("fetched array of colors "+availableColors)
+  return Array.from(availableColors);
+}
+
+export async function fetchAnyVariant(variant_id:string) { 
+  //TODO : request from DB variant table
+  for (let i = 0; i < testVariants.length; i++) {
+    if (testVariants[i].id === variant_id) {
+      return testVariants[i];
+    }
+  }
 }

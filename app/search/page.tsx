@@ -9,7 +9,7 @@ export default async function Products() {
                 <Suspense fallback={<CardSkeleton />}>
             {products.map((product) => {
                 return (
-                <Card id = {product.id} title={product.title} type={product.type} description={product.description} price={product.price}></Card> )
+                <Card key={product.id} id = {product.id} title={product.title} type={product.type} description={product.description} price={product.price}></Card> )
             } )}
             </Suspense>
         </div>

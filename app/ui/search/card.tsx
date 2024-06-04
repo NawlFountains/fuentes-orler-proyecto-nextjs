@@ -1,3 +1,4 @@
+import { fetchAnyVariant } from '@/app/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
   
@@ -6,7 +7,6 @@ import Link from 'next/link';
     title,
     type,
     description,
-    price,
   }: {
     id: string;
     title: string;
@@ -14,6 +14,8 @@ import Link from 'next/link';
     description: string;
     price: number;
   }) {
+    //TODO pick variant to show, 
+    let product = await fetchAnyVariant(id);
     let pathImage = title.toLowerCase();
     pathImage = pathImage.replaceAll(" ", "-");
     return (
@@ -24,7 +26,7 @@ import Link from 'next/link';
         </div>
         <div className="flex flex-col mx-4 " >
           <h2 className="text-md text-gray-300 md:text-left text-center">{title}</h2>
-          <p className="text-sm text-gray-500 md:text-left text-center">${price}</p>
+          <p className="text-sm text-gray-500 md:text-left text-center">${product?.price}</p>
         </div>
       </div>
       </Link>

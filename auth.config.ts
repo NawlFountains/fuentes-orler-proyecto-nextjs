@@ -1,5 +1,4 @@
 import type { NextAuthConfig } from 'next-auth';
-import { setUserLoggedIn } from './app/ui/dashboard/navbar';
  
 export const authConfig = {
   pages: {
