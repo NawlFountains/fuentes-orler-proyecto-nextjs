@@ -269,7 +269,7 @@ export async function fetchProduct(product_id:string) {
   //TODO : request from DB
 
   //Dummy test
-  let product;
+  let product = testProducts[0];
   console.log('Fetching product data of '+product_id);
   for (let i = 0; i < testProducts.length; i++) {
     if (testProducts[i].id === product_id) {
