@@ -13,7 +13,7 @@ export type Customer = {
   id: string;
   name: string;
   email: string;
-  image_url: string;
+  image_url: string | undefined;
 };
 
 export type Invoice = {
@@ -90,7 +90,7 @@ export type InvoiceForm = {
 export type Product = {
   id: string;
   name: string;
-  type: string;
+  category: string;
   description: string;
   price: number;
   imageURL: string;
