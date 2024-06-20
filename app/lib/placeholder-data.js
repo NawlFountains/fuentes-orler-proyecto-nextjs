@@ -1,11 +1,17 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 // https://nextjs.org/learn/dashboard-app/fetching-data
-const admin = [
+const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
     name: 'User',
     email: 'user@nextmail.com',
     password: '123456',
+  },
+  {
+    id: '410544b2-4001-4271-9855-fec4b6a6449b',
+    name: 'admin',
+    email: 'admin@nextmail.com',
+    password: 'admin',
   },
 ];
 const products = [
@@ -18,6 +24,6 @@ const products = [
   { id: '7',name: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description', price : 2000 , imageURL: ''},
 ];
 module.exports = {
-  admin,
+  users,
   products,
 };
