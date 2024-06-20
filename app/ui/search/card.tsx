@@ -5,18 +5,18 @@ import Link from 'next/link';
     id,
     name,
     price,
-    imageURL,
+    image_url,
   }: {
     id: string;
     name: string;
     price: number;
-    imageURL: string;
+    image_url: string;
   }) {
     return (
         <Link href={`/products/${id}`}>
       <div className="rounded-xl p-2 shadow-sm border border-gray-200 space-y-2">
         <div className="flex">
-            <Image src={imageURL} alt={"Image of " + name} width={200} height={300} className="rounded-xl mx-auto" />
+            <Image src={image_url} alt={"Image of " + name} width={200} height={300} className="rounded-xl mx-auto" />
         </div>
         <div className="flex flex-col mx-4 " >
           <h2 className="text-md text-gray-300 md:text-left text-center">{name}</h2>

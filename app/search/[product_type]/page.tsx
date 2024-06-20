@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { product_type: string 
             id={product.id}
             name={product.name}
             price={product.price}
-            imageURL={product.image_url}
+            image_url={product.image_url}
           />
         ))}
       </Suspense>

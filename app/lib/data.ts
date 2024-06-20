@@ -263,6 +263,7 @@ export async function getUser(email: string) {
 }
 
 export async function fetchProductCategories() {
+  noStore();
   try {
     const productTypesResponse = await sql`
       SELECT DISTINCT
