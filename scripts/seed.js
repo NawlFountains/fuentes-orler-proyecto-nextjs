@@ -51,7 +51,7 @@ async function seedProducts(client) {
 
     // Create the "products" table if it doesn't exist
     const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS product (
+      CREATE TABLE IF NOT EXISTS products (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         category VARCHAR(255) NOT NULL,
