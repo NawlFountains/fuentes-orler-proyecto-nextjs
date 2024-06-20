@@ -1,6 +1,25 @@
 import Image from 'next/image';
 import { fetchProduct } from '@/app/lib/data';
+import {MercadoPagoConfig, Preference} from 'mercadopago';
+import { redirect } from 'next/navigation';
+
+const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 export default async function Page({ params }: { params: { product_id: string } }) {
+  async function buyProduct() {
+    'use-server'
+    const preference = new Preference(client).create({
+        body: {
+          items: [{
+            id: 'buy',
+            title: product.name,
+            quantity: 1,
+            unit_price: product.price,
+          }]
+        }
+    });
+
+    redirect((await preference).sandbox_init_point!);
+  }
   const product = await fetchProduct(params.product_id);
   return (
     <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-5">
@@ -14,7 +33,7 @@ export default async function Page({ params }: { params: { product_id: string } 
         </div>
         <div className="grid grid-cols-2 mt-10">
           <p className='text-3xl mx-auto'>${product.price}</p>
-          <button className="rounded-md text-black font-bold p-2 bg-white">Buy now</button>
+          <button onClick={buyProduct} className="rounded-md text-black font-bold p-2 bg-white">Buy now</button>
         </div>
       </div>
     </div>
