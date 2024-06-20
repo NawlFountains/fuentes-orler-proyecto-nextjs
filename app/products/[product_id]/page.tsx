@@ -33,7 +33,8 @@ export default async function Page({ params }: { params: { product_id: string } 
         </div>
         <div className="grid grid-cols-2 mt-10">
           <p className='text-3xl mx-auto'>${product.price}</p>
-          <button onClick={buyProduct} className="rounded-md text-black font-bold p-2 bg-white">Buy now</button>
+          {/* <button onClick={buyProduct} className="rounded-md text-black font-bold p-2 bg-white">Buy now</button> */}
+          <button className="rounded-md text-black font-bold p-2 bg-white">Buy now</button>
         </div>
       </div>
     </div>

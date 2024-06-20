@@ -45,7 +45,7 @@ export default function EditProductForm({
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="category" className="mb-2 block text-sm font-medium">
-            Choose category
+            Choose an category
           </label>
           <div className="relative">
             <select
@@ -54,8 +54,8 @@ export default function EditProductForm({
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={product.category}
             >
-              <option value="" disabled>
-                Select a customer
+              <option value="">
+                Select a category
               </option>
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -75,8 +75,8 @@ export default function EditProductForm({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="Price"
-                name="Price"
+                id="price"
+                name="price"
                 type="number"
                 step="0.01"
                 defaultValue={product.price}
@@ -124,6 +124,21 @@ export default function EditProductForm({
                 aria-describedby="image-error"
               />
               <img src={product.image_url} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
+            </div>
+          </div><label htmlFor="image" className="mb-2 block text-sm font-medium">
+            Upload image url
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="image_url"
+                name="image_url"
+                type="text"
+                step="0.01"
+                defaultValue={product.image_url}
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="image_url-error"
+              />
             </div>
           </div>
         </div>

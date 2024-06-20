@@ -40,7 +40,7 @@ export default async function ProductsTable({
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(product.price)}
+                      ${product.price}
                     </p>
                   </div>
                   <div className="flex justify-end gap-2">
@@ -90,7 +90,7 @@ export default async function ProductsTable({
                     {product.category}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(product.price)}
+                    ${product.price}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">

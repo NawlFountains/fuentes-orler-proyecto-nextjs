@@ -307,7 +307,6 @@ export async function fetchProduct(product_id:string) {
     const products = data.rows.map((product: any) => ({
       ...product,
     }))
-    console.log(products);
     return products[0];
   } catch (err) {
     console.error('Database Error:', err);
@@ -326,7 +325,6 @@ export async function fetchProductsByCategory(product_category:string) {
     const products = data.rows.map((product: any) => ({
       ...product,
     }))
-    console.log(products);
     return products;
   } catch (err) {
     console.error('Database Error:', err);

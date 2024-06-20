@@ -135,7 +135,7 @@ export default function Form({ categories }: { categories: string[] }) {
           </div>
         </div>
 
-        {/* Image url */}
+        {/* Image */}
       <div className="mb-4">
           <label htmlFor="image" className="mb-2 block text-sm font-medium">
             Upload image
@@ -153,6 +153,27 @@ export default function Form({ categories }: { categories: string[] }) {
               />
             </div>
           </div>
+          <div>
+            
+            {/* Image url */}
+          <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
+            Upload image_url
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="image_url"
+                name="image_url"
+                type="text"
+                step="0.01"
+                placeholder="Upload link to image"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="image_url-error"
+              />
+            </div>
+          </div>
+          </div>
+  
         </div>
         
       </div>
