@@ -7,6 +7,17 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
+// Require the cloudinary library
+const cloudinary = require('cloudinary').v2;
+
+// Return "https" URLs by setting secure: true
+cloudinary.config({
+  secure: true
+});
+
+// Log the configuration
+console.log(cloudinary.config());
+
 const FormSchema = z.object({
   id: z.string(),
   name: z.string({
@@ -59,15 +70,22 @@ export async function createProduct(prevState: State, formData: FormData) {
       message: 'Missing Fields. Failed to Create Product.',
     };
   }
+
   
   console.log("Succesful");
 
 
   //TODO: upload image to cloudinary using API and the insert the URL
   
+  
   // Prepare data for insertion into the database
-  const { name, category, price, description, image_url } = validatedFields.data;
- 
+  let { name, category, price, description, image_url } = validatedFields.data;
+  
+  const imageFile = formData.get('image');
+  if (imageFile !== null && imageFile instanceof File) {
+    image_url = await uploadToCloudinary(imageFile);
+    console.log("Uploaded image link "+image_url);
+  }
   // Insert data into the database
   try {
     await sql`
@@ -86,7 +104,7 @@ export async function createProduct(prevState: State, formData: FormData) {
   redirect('/admin');
 }
   export async function updateProduct(id: string, formData: FormData) {
-    const { name, category, price, description , image_url } = UpdateProduct.parse({
+    let { name, category, price, description , image_url } = UpdateProduct.parse({
       name: formData.get('name'),
       category: formData.get('category'),
       price: formData.get('price'),
@@ -96,7 +114,11 @@ export async function createProduct(prevState: State, formData: FormData) {
    
 
     //TODO upload new image or keep old image and update the URL
-
+    const imageFile = formData.get('image');
+    if (imageFile !== null && imageFile instanceof File) {
+      image_url = await uploadToCloudinary(imageFile);
+      console.log("Uploaded image link "+image_url);
+    }
     try {
     await sql`
       UPDATE products
@@ -142,4 +164,34 @@ export async function createProduct(prevState: State, formData: FormData) {
       }
       throw error;
     }
+  }
+  
+  async function uploadToCloudinary(imageFile: File) {
+    const imageReader = imageFile.stream().getReader();
+    const byteArrayImage: number[] = [];
+    
+    while (true) {
+      const { done, value } = await imageReader.read();
+  
+      if (done)
+        break;
+      
+      // @ts-ignore
+      byteArrayImage.push(...value);
+    }
+
+    // @ts-ignore
+    const byteArrayBuffer = Buffer.from(byteArrayImage, 'binary');
+  
+    console.log("5")
+  
+    const uploadResult = await new Promise((resolve) => {
+      cloudinary.uploader.upload_stream((error : any, uploadResult : any) => {
+        return resolve(uploadResult);
+      }).end(byteArrayBuffer);
+    });
+  
+    const img_link = (uploadResult as any).url;
+  
+    return img_link;
   }
