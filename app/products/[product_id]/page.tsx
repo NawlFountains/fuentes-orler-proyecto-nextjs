@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { product_id: string } 
         </div>
         <div className="grid grid-cols-2 mt-10">
           <p className='text-3xl mx-auto'>${product.price}</p>
-          <button className="rounded-md text-black font-bold p-2 bg-white">Add to cart</button>
+          <button className="rounded-md text-black font-bold p-2 bg-white">Buy now</button>
         </div>
       </div>
     </div>
