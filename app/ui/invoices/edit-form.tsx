@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm, Product } from '@/app/lib/definitions';
+import { CustomerField, Product } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -9,9 +9,9 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { updateInvoice, updateProduct } from '@/app/lib/actions';
+import { updateProduct } from '@/app/lib/actions';
 
-export default function EditInvoiceForm({
+export default function EditProductForm({
   product,
   categories,
 }: {

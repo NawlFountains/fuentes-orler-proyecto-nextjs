@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice, UpdateProduct, DeleteProduct } from '@/app/ui/invoices/buttons';
+import { UpdateProduct, DeleteProduct } from '@/app/ui/invoices/buttons';
 import { formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredProducts } from '@/app/lib/data';
 
@@ -40,7 +40,7 @@ export default async function ProductsTable({
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(products.price)}
+                      {formatCurrency(product.price)}
                     </p>
                   </div>
                   <div className="flex justify-end gap-2">
