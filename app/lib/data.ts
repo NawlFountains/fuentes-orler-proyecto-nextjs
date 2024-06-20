@@ -8,19 +8,10 @@ import {
   User,
   Revenue,
   Product,
+  ProductsTable,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
-
-const testProducts = [
-  { id: '1', name: 'Blue jeans', type: 'pants', description: 'Blue jeans description', price : 1000, imageURL: 'https://res.cloudinary.com/dzbaziutc/image/upload/v1717533921/blue-jeans_ays0r6.jpg'},
-  { id: '2', name: 'Brown pants', type : 'pants', description: 'Brown pants description' , price : 2000 , imageURL: ''},
-  { id: '3',name: 'Fit Tshirt black', type: 'tshirt', description: 'Fit tshirt black description' , price : 2000 , imageURL: ''},
-  { id: '4',name: 'Piluso', type: 'hat', description: 'Piluso description', price : 2000 , imageURL: ''},
-  { id: '5',name: 'Tshirt white', type: 'tshirt', description: 'Tshirt white description', price : 2000 , imageURL: ''},
-  { id: '6',name: 'Classic shoe' , type: 'shoes', description: 'Classic shoe description', price : 2000 , imageURL: ''},
-  { id: '7',name: 'Formal shoe' , type: 'shoes', description: 'Formal shoe description', price : 2000 , imageURL: ''},
-];
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
@@ -138,23 +129,43 @@ export async function fetchFilteredInvoices(
     throw new Error('Failed to fetch invoices.');
   }
 }
+export async function fetchFilteredProducts(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
+  noStore();
+  try {
+    const invoices = await sql<ProductsTable>`
+       SELECT *
+       FROM products
+       WHERE
+        name ILIKE ${`%${query}%`} OR
+        category ILIKE ${`%${query}%`} OR
+        price::text ILIKE ${`%${query}%`}
+        ORDER BY name DESC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return invoices.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
+  }
+}
 export async function fetchProductsPages(query: string) {
   noStore();
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
+    FROM products
     WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+      name ILIKE ${`%${query}%`} OR
+      category ILIKE ${`%${query}%`} OR
+      price::text ILIKE ${`%${query}%`}
   `;
 
-    // const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
-    const totalPages = Math.ceil(Number(testProducts.length) / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
@@ -251,55 +262,73 @@ export async function getUser(email: string) {
   }
 }
 
-export async function fetchProductTypes() {
-  //TODO : request from DB
-
-  //Dummy test
-  const productTypes = ['pants', 'tshirt', 'hat','shoes'];
-  return productTypes;
+export async function fetchProductCategories() {
+  try {
+    const productTypesResponse = await sql`
+      SELECT DISTINCT
+        category
+      FROM products
+    `;
+    let productTypes = [];
+    for (let i = 0; i < productTypesResponse.rows.length; i++) {
+      productTypes[i] = productTypesResponse.rows[i].category;
+    }
+    return productTypes;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product types.'+err);
+  }
 }
 export async function fetchProducts() {
-  //TODO : request from DB
-
-  //Dummy test with names (Blue jeans, Brown pants, Fit Tshirt black, Piluso , Tshirt white)
-  let products = testProducts;
-  return products;
+  noStore();
+  try {
+    const data = await sql`
+      SELECT *
+      FROM products
+    `;
+    const products = data.rows.map((product: any) => ({
+      ...product,
+    }))
+    return products;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product types.'+err);
+  }
 }
 export async function fetchProduct(product_id:string) {
-  //TODO : request from DB
-
-  //Dummy test
-  let product = testProducts[0];
-  console.log('Fetching product data of '+product_id);
-  for (let i = 0; i < testProducts.length; i++) {
-    if (testProducts[i].id === product_id) {
-      product = testProducts[i];
-      break;
-    }
+  noStore();
+  try {
+    const data = await sql`
+      SELECT *
+      FROM products
+      WHERE id = ${product_id}
+    `;
+    const products = data.rows.map((product: any) => ({
+      ...product,
+    }))
+    console.log(products);
+    return products[0];
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product types.'+err);
   }
-  return product;
 }
 
-export async function fetchProductsByType(product_type:string) {
-  //TODO : request from DB
-
-  //Dummy test
-  let a = 0;
-  let productsFiltered : Product[] = [];
-  for (let i = 0; i < testProducts.length; i++) {
-    if (testProducts[i].type === product_type) {
-      productsFiltered[a] = {
-        id : testProducts[i].id,
-        name: testProducts[i].name,
-        category: testProducts[i].type,
-        price: testProducts[i].price,
-        description: testProducts[i].description,
-        imageURL: testProducts[i].imageURL,
-      }
-      a = a + 1;
-    }
+export async function fetchProductsByCategory(product_category:string) {
+  noStore();
+  try {
+    const data = await sql`
+      SELECT *
+      FROM products
+      WHERE category = ${product_category}
+    `;
+    const products = data.rows.map((product: any) => ({
+      ...product,
+    }))
+    console.log(products);
+    return products;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product by category.');
   }
-  //Add a variant for each product
-
-  return productsFiltered;
 }

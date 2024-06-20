@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { fetchProductTypes } from '@/app/lib/data';
 import clsx from 'clsx';
 
 // Map of links to display in the side navigation.
@@ -10,36 +9,13 @@ import clsx from 'clsx';
 
 // TODO: Dynamically import product types from DB
 
-// TODO: make category carrusel for mobile
-async function generateLinks() {
-  try {
-      // Wait for the types to be fetched
-      const types = await fetchProductTypes();
-      
-      let links = [];
-      // Generate links from the fetched types
-      for (let i = 0; i < types.length; i++) {
-          links[i] = { name: types[i], href: `/search/${types[i]}` };
-      }
-      
-      console.log(links);
-      
-      return links;
-  } catch (error) {
-      console.error('Error fetching product types:', error);
-      // Throw error or handle it accordingly
-      throw error;
-  }
-}
-
-export default async function NavLinks() {
+export default function SideLinks( { categories }: { categories: string[] } ) {
   const pathname = usePathname();
-  const types = await fetchProductTypes();
 
   let links = [];
       // Generate links from the fetched types
-      for (let i = 0; i < types.length; i++) {
-          links[i] = { name: types[i], href: `/search/${types[i]}` };
+      for (let i = 0; i < categories.length; i++) {
+          links[i] = { name: categories[i], href: `/search/${categories[i]}` };
       }
       
   return (

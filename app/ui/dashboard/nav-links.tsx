@@ -17,8 +17,8 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   {
-    name: 'Invoices',
-    href: '/invoices',
+    name: 'Admin panel',
+    href: '/admin',
     icon: DocumentDuplicateIcon,
   },
 ];

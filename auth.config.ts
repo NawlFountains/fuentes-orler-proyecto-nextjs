@@ -7,10 +7,10 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnAdminDashboard = nextUrl.pathname.startsWith('/invoices');
+      const isOnAdminDashboard = nextUrl.pathname.startsWith('/admin');
       const isOnLogin = nextUrl.pathname.startsWith('/login');
       if (isOnLogin && isLoggedIn) {
-        return Response.redirect(new URL('/invoices',nextUrl));
+        return Response.redirect(new URL('/admin',nextUrl));
       }
       if (isOnAdminDashboard) {
         if (isLoggedIn) return true;

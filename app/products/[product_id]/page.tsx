@@ -2,11 +2,10 @@ import Image from 'next/image';
 import { fetchProduct } from '@/app/lib/data';
 export default async function Page({ params }: { params: { product_id: string } }) {
   const product = await fetchProduct(params.product_id);
-  let checkedImageUrl = product?.imageURL;
   return (
     <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-5">
       <div className="rounded-xl p-2 md:col-span-2 shadow-sm border border-gray-200">
-        <Image src={checkedImageUrl} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
+        <Image src={product.image_url} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
       </div>
       <div className="rounded-xl p-2 shadow-sm">
         <div>
