@@ -25,7 +25,7 @@ async function seedUsers(client) {
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO user (id, name, email, password)
+        INSERT INTO users (id, name, email, password)
         VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
@@ -36,7 +36,7 @@ async function seedUsers(client) {
 
     return {
       createTable,
-      user: insertedUsers,
+      users: insertedUsers,
     };
   } catch (error) {
     console.error('Error seeding users:', error);
@@ -68,7 +68,7 @@ async function seedProducts(client) {
       products.map(
         (product) => client.sql`
         INSERT INTO products (id, name, category, price, description, image_url)
-        VALUES (${product.id}, ${product.name}, ${product.category}, ${product.price}, ${product.description}, ${product.image_url})
+        VALUES (${product.id}, ${product.name}, ${product.category}, ${product.price}, ${product.description}, ${product.imageURL})
         ON CONFLICT (id) DO NOTHING;
       `,
       ),
@@ -91,7 +91,7 @@ async function main() {
 
   //connect client to db using database_url
 
-  // await seedUsers(client);
+  await seedUsers(client);
   await seedProducts(client);
 
   await client.end();
