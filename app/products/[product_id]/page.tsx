@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 export default async function Page({ params }: { params: { product_id: string } }) {
   async function buyProduct() {
-    'use-server'
+    'use server'
     const preference = new Preference(client).create({
         body: {
           items: [{
