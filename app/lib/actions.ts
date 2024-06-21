@@ -6,6 +6,8 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import MercadoPagoConfig, { Preference } from 'mercadopago';
+import { Product } from './definitions';
 
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
@@ -236,4 +238,26 @@ export async function createProduct(prevState: State, formData: FormData) {
     const img_link = (uploadResult as any).url;
   
     return img_link;
+  }
+
+
+  const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
+
+  export async function buyProduct(product:Product) {
+    
+    console.log('buying...');
+    const preference = await new Preference(client).create({
+        body: {
+          items: [{
+            id: '1',
+            title: product.name,
+            quantity: 1,
+            unit_price: product.price,
+          }]
+        }
+    });
+    var redirectPath = preference.sandbox_init_point;
+    console.log(redirectPath);
+    if(redirectPath)
+      redirect(redirectPath);
   }
