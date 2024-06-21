@@ -21,8 +21,8 @@ export default function Form({ categories }: { categories: string[] }) {
     setSelectedOption(event.target.value);
 };
   return (
-    <form action={dispatch} className="text-black">
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+    <form action={dispatch} className="text-white">
+      <div className="rounded-md border border-gray-200 p-4 md:p-6">
         {/* Product name */}
         <div className="mb-4">
           <label htmlFor="name" className="mb-2 block text-sm font-medium">
@@ -36,7 +36,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="text"
                 step="0.01"
                 placeholder="Enter name"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="name-error"
               />
             </div>
@@ -55,13 +55,13 @@ export default function Form({ categories }: { categories: string[] }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label htmlFor="category" className="mb-2 block text-sm font-medium">
-               Choose product category
+            Choose product`&apos;`s category
             </label>
             <div className="w-full">
               <select
                 id="category"
                 name="category"
-                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full cursor-pointer bg-black rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="category-error"
                 value = {selectedOption}
                 onChange={handleChange}
@@ -83,9 +83,9 @@ export default function Form({ categories }: { categories: string[] }) {
           <div>
           <label htmlFor="newCategory"
             className={clsx(
-              'mb-2 block text-sm font-medium text-black',
+              'mb-2 block text-sm font-medium text-gray-50',
               {
-                'text-gray-300': selectedOption !== 'New category',
+                'text-gray-900': selectedOption !== 'New category',
               },
             )}>
              Create a new category
@@ -99,7 +99,12 @@ export default function Form({ categories }: { categories: string[] }) {
                 placeholder="Enter new category"
                 aria-describedby="category-error"
                 disabled = {selectedOption !== 'New category'}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={clsx(
+                  'peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  {
+                    'border-gray-900 placeholder:text-gray-900': selectedOption !== 'New category',
+                  },
+                )}
               />
             </div>
           </div>
@@ -116,7 +121,7 @@ export default function Form({ categories }: { categories: string[] }) {
         {/* Product price */}
         <div className="mb-4">
           <label htmlFor="price" className="mb-2 block text-sm font-medium">
-            Choose an amount
+            Choose a price
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -126,7 +131,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="number"
                 step="0.01"
                 placeholder="Enter price"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="price-error"
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -155,7 +160,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="text"
                 step="0.01"
                 placeholder="Enter product description"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="description-error"
               />
             </div>
@@ -185,7 +190,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 step="0.01"
                 placeholder="Select image to upload"
                 accept="image/png, image/jpg, image/jpeg"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
                 value = {imageLoadingMethod}
                 onChange={(e) => setImageLoadingMethod(e.target.value)}
@@ -196,11 +201,11 @@ export default function Form({ categories }: { categories: string[] }) {
 
         {/* Image url */}
           <div>
-          <label htmlFor="image"
+          <label htmlFor="image_url"
             className={clsx(
-              'mb-2 block text-sm font-medium text-black',
+              'mb-2 block text-sm font-medium text-gray-50',
               {
-                'text-gray-300': imageLoadingMethod !== '',
+                'text-gray-900': imageLoadingMethod !== '',
               },
             )}>
               Upload url to image (Only images from cloudinary)
@@ -213,9 +218,14 @@ export default function Form({ categories }: { categories: string[] }) {
                   type="text"
                   step="0.01"
                   placeholder="Upload link to image"
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   aria-describedby="image_url-error"
                   disabled = {imageLoadingMethod !== ''}
+                  className={clsx(
+                    'peer block w-full rounded-md bg-black text-gray-50 border border-gray-50 py-2 pl-10 text-sm outline-2 placeholder:text-gray-50',
+                    {
+                      'border-gray-800 text-gray-900 placeholder:text-gray-900': imageLoadingMethod !== '',
+                    },
+                  )}
                 />
               </div>
             </div>
@@ -235,7 +245,7 @@ export default function Form({ categories }: { categories: string[] }) {
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/admin"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-lg bg-black text-white border border-gray-200 px-4 text-sm font-medium transition-colors hover:bg-gray-50 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
         >
           Cancel
         </Link>

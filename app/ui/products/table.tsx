@@ -12,21 +12,21 @@ export default async function ProductsTable({
   const products = await fetchFilteredProducts(query, currentPage);
 
   return (
-    <div className="mt-6 flow-root text-gray-900">
+    <div className="mt-6 flow-root text-white">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="rounded-lg p-2 md:pt-0 border border-gray-200">
           <div className="md:hidden">
             {products?.map((product) => (
               <div
                 key={product.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
+                className="mb-2 w-full p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
                         src={product.image_url}
-                        className="mr-2 rounded-full"
+                        className="mr-2"
                         width={28}
                         height={28}
                         alt={`${product.name}'s product picture`}
@@ -50,7 +50,7 @@ export default async function ProductsTable({
               </div>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          <table className="hidden min-w-full text-gray-900 md:table text-white">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
@@ -67,7 +67,7 @@ export default async function ProductsTable({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="">
               {products?.map((product) => (
                 <tr
                   key={product.id}

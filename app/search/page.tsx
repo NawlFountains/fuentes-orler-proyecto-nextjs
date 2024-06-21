@@ -6,7 +6,7 @@ export default async function Products() {
     const products = await fetchProducts();
     return (
         <div >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                     <Suspense fallback={<CardSkeleton />}>
                 {products.map((product) => {
                     return (

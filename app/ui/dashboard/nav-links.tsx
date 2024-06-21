@@ -14,20 +14,32 @@ const links = [
   {
     name: 'Products', 
     href: '/search', 
+    auth: false,
     icon: DocumentDuplicateIcon,
   },
   {
     name: 'Admin panel',
     href: '/admin',
+    auth: true,
     icon: DocumentDuplicateIcon,
   },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({
+  logged,
+}: {
+  logged: boolean;
+}) {
   const pathname = usePathname();
   return (
     <>
       {links.map((link) => {
+
+        if (link.auth) {
+          if (!logged) {
+            return null;
+          }
+        }
         const LinkIcon = link.icon;
         return (
           <Link

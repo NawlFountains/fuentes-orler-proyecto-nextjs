@@ -18,7 +18,7 @@ export function UpdateProduct({ id }: { id: string }) {
   return (
     <Link
       href={`/admin/${id}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="rounded-md border p-2 hover:bg-gray-100 hover:text-black"
     >
       <PencilIcon className="w-5" />
     </Link>
@@ -29,7 +29,7 @@ export function DeleteProduct({ id }: { id: string }) {
   const deleteProductWithId = deleteProduct.bind(null, id);
   return (
     <form action={deleteProductWithId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <button className="rounded-md border p-2 hover:bg-gray-100 hover:text-black">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
       </button>
