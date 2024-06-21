@@ -2,7 +2,8 @@
 
 import {
   HomeIcon,
-  DocumentDuplicateIcon,
+  BuildingStorefrontIcon,
+  IdentificationIcon 
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,13 +16,13 @@ const links = [
     name: 'Products', 
     href: '/search', 
     auth: false,
-    icon: DocumentDuplicateIcon,
+    icon: BuildingStorefrontIcon,
   },
   {
     name: 'Admin panel',
     href: '/admin',
     auth: true,
-    icon: DocumentDuplicateIcon,
+    icon: IdentificationIcon ,
   },
 ];
 

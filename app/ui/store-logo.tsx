@@ -5,7 +5,7 @@ export default function StoreLogo() {
     <div
       className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
     >
-      <p className="text-[44px] text-white">Shop</p>
+      <p className="text-[44px] text-white">Store</p>
     </div>
   );
 }
