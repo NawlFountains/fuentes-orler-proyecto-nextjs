@@ -10,6 +10,7 @@ import { Button } from '@/app/ui/button';
 import { createProduct } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 export default function Form({ categories }: { categories: string[] }) {
   const initialState = { message: null, errors: {} };
@@ -61,7 +62,6 @@ export default function Form({ categories }: { categories: string[] }) {
                 id="category"
                 name="category"
                 className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue=""
                 aria-describedby="category-error"
                 value = {selectedOption}
                 onChange={handleChange}
@@ -69,7 +69,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 <option value="" disabled>
                   Select a category
                 </option>
-                <option value="#newCategory">
+                <option value="New category">
                   New category
                 </option>
                 {categories.map((category) => (
@@ -81,18 +81,24 @@ export default function Form({ categories }: { categories: string[] }) {
             </div>
           </div>
           <div>
-            <label htmlFor="category" className="mb-2 block text-sm font-medium">
+          <label htmlFor="newCategory"
+            className={clsx(
+              'mb-2 block text-sm font-medium text-black',
+              {
+                'text-gray-300': selectedOption !== 'New category',
+              },
+            )}>
              Create a new category
             </label>
             <div className="w-full">
             <input
-                id="category"
-                name="category"
+                id="newCategory"
+                name="newCategory"
                 type="text"
                 step="0.01"
                 placeholder="Enter new category"
                 aria-describedby="category-error"
-                disabled = {selectedOption !== '#newCategory'}
+                disabled = {selectedOption !== 'New category'}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
             </div>
@@ -181,6 +187,8 @@ export default function Form({ categories }: { categories: string[] }) {
                 accept="image/png, image/jpg, image/jpeg"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
+                value = {imageLoadingMethod}
+                onChange={(e) => setImageLoadingMethod(e.target.value)}
               />
               </div>
             </div>
@@ -188,7 +196,13 @@ export default function Form({ categories }: { categories: string[] }) {
 
         {/* Image url */}
           <div>
-            <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
+          <label htmlFor="image"
+            className={clsx(
+              'mb-2 block text-sm font-medium text-black',
+              {
+                'text-gray-300': imageLoadingMethod !== '',
+              },
+            )}>
               Upload url to image (Only images from cloudinary)
             </label>
             <div className="relative mt-2 rounded-md">
@@ -201,10 +215,19 @@ export default function Form({ categories }: { categories: string[] }) {
                   placeholder="Upload link to image"
                   className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                   aria-describedby="image_url-error"
+                  disabled = {imageLoadingMethod !== ''}
                 />
               </div>
             </div>
           </div>
+          <div id="image_url-error" aria-live="polite" aria-atomic="true" className='align-middle'>
+          {state.errors?.image &&
+            state.errors.image.map((error: string) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+        </div>
   
         </div>
         

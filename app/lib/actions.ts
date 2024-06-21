@@ -15,8 +15,28 @@ cloudinary.config({
   secure: true
 });
 
-// Log the configuration
-console.log(cloudinary.config());
+const urlSchema = z.string({
+  invalid_type_error: 'Please enter an image URL.',
+})
+  .min(1, { message: 'Please upload an image or enter an image URL.' })
+  .refine(
+    (url) => url.startsWith('http://') || url.startsWith('https://'),
+    { message: 'The URL must start with http or https.' }
+  )
+  .refine(
+    (url) => url.includes('cloudinary'),
+    { message: 'The URL must be from Cloudinary.' }
+  );
+
+// Define the file schema
+const fileSchema = z.instanceof(File)
+  .refine(
+    (file) => file.size > 0,
+    { message: 'Please upload an image.' }
+  );
+
+// Define a custom schema for the image field
+const imageSchema = urlSchema.or(fileSchema);
 
 const FormSchema = z.object({
   id: z.string(),
@@ -31,21 +51,21 @@ const FormSchema = z.object({
     .gt(0, { message: 'Please enter a price greater than $0.' }),
   description: z.string({
     invalid_type_error: 'Please enter a description.',
-  }).min(1, { message: 'Please enter a name.' }),
-  image_url: z.string({
-    invalid_type_error: 'Please enter a image_url.',
-  }).min(1, { message: 'Please enter a image_url.' }),
+  }).min(1, { message: 'Please enter a description.' }),
+  image: imageSchema
 })
 
 const CreateProduct = FormSchema.omit({ id: true });
 
 const UpdateProduct = FormSchema.omit({ id: true });
+
 export type State = {
   errors?: {
     name ?: string[] | null;
     category?: string[] | null;
     price?: string[] | null;
     description?: string[] | null;
+    image?: string[] | null;
   };
   message?: string | null;
 };
@@ -53,16 +73,25 @@ export type State = {
 
 export async function createProduct(prevState: State, formData: FormData) {
   // Validate form using Zod
-  console.log("About to validate the form");
+  let categoryInForm = 'category';
+  if (formData.get('category') === "New category") {
+    categoryInForm = 'newCategory';
+  }
+
+  let imageUnparsed = formData.get('image_url');
+  if (imageUnparsed === null) {
+    imageUnparsed = formData.get('image');
+  }
+
   const validatedFields = CreateProduct.safeParse({
     name: formData.get('name'),
-    category: formData.get('category'),
+    category: formData.get(categoryInForm),
     price: formData.get('price'),
     description: formData.get('description'),
-    image_url: formData.get('image_url'),
+    image: imageUnparsed,
   });
- 
-  console.log("Informing validation of the form");
+
+  
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
@@ -70,22 +99,18 @@ export async function createProduct(prevState: State, formData: FormData) {
       message: 'Missing Fields. Failed to Create Product.',
     };
   }
-
   
-  console.log("Succesful");
 
-
-  //TODO: upload image to cloudinary using API and the insert the URL
-  
-  
   // Prepare data for insertion into the database
-  let { name, category, price, description, image_url } = validatedFields.data;
-  
-  const imageFile = formData.get('image');
-  if (imageFile !== null && imageFile instanceof File) {
-    image_url = await uploadToCloudinary(imageFile);
-    console.log("Uploaded image link "+image_url);
+  let { name, category, price, description, image } = validatedFields.data;
+
+  let image_url = null;
+  if ( image instanceof File) {
+    image_url = await uploadToCloudinary(image);
+  } else {
+    image_url = image;
   }
+  
   // Insert data into the database
   try {
     await sql`
@@ -104,21 +129,41 @@ export async function createProduct(prevState: State, formData: FormData) {
   redirect('/admin');
 }
   export async function updateProduct(id: string, formData: FormData) {
-    let { name, category, price, description , image_url } = UpdateProduct.parse({
+    let categoryInForm = 'category';
+    if (formData.get('category') === "New category") {
+      categoryInForm = 'newCategory';
+    }
+    let imageUnparsed = formData.get('image_url');
+    if (imageUnparsed === null) {
+      imageUnparsed = formData.get('image');
+    }
+
+    const validatedFields = UpdateProduct.safeParse({
       name: formData.get('name'),
-      category: formData.get('category'),
+      category: formData.get(categoryInForm),
       price: formData.get('price'),
       description: formData.get('description'),
-      image_url: formData.get('image_url'),
+      image: imageUnparsed,
     });
-   
 
-    //TODO upload new image or keep old image and update the URL
-    const imageFile = formData.get('image');
-    if (imageFile !== null && imageFile instanceof File) {
-      image_url = await uploadToCloudinary(imageFile);
-      console.log("Uploaded image link "+image_url);
+    // If form validation fails, return errors early. Otherwise, continue.
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Create Product.',
+      };
     }
+    
+    // Prepare data for insertion into the database
+    let { name, category, price, description, image } = validatedFields.data;
+
+  let image_url = null;
+  if ( image instanceof File) {
+    image_url = await uploadToCloudinary(image);
+  } else {
+    image_url = image;
+  }
+  
     try {
     await sql`
       UPDATE products
@@ -182,9 +227,6 @@ export async function createProduct(prevState: State, formData: FormData) {
 
     // @ts-ignore
     const byteArrayBuffer = Buffer.from(byteArrayImage, 'binary');
-  
-    console.log("5")
-  
     const uploadResult = await new Promise((resolve) => {
       cloudinary.uploader.upload_stream((error : any, uploadResult : any) => {
         return resolve(uploadResult);

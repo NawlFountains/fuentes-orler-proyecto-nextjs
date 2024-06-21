@@ -1,16 +1,14 @@
 'use client';
 
-import { CustomerField, Product } from '@/app/lib/definitions';
+import { Product } from '@/app/lib/definitions';
 import {
-  CheckIcon,
-  ClockIcon,
   CurrencyDollarIcon,
-  UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateProduct } from '@/app/lib/actions';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 export default function EditProductForm({
   product,
@@ -20,7 +18,8 @@ export default function EditProductForm({
   categories: string [];
 }) {
   const updateProductWithId = updateProduct.bind(null, product.id);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(product.category);
+  const [imageLoadingMethod, setImageLoadingMethod] = useState('');
 
     const handleChange = (event : any) => {
         setSelectedOption(event.target.value);
@@ -52,25 +51,24 @@ export default function EditProductForm({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-4">
           <div>
           <label htmlFor="category" className="mb-2 block text-sm font-medium">
-            Choose an category
+            Choose an category {product.category}
           </label>
           <div className="relative">
             <select
               id="category"
               name="category"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={product.category}
               value = {selectedOption}
               onChange={handleChange}
             >
-              <option value="">
+              <option value="" disabled>
                 Select a category
               </option>
-              <option value="#newCategory">
+              <option value="New category">
                 New category
               </option>
               {categories.map((category) => (
-                <option key={category} value={category}>
+                <option key={category} value={category} >
                   {category}
                 </option>
               ))}
@@ -78,20 +76,26 @@ export default function EditProductForm({
             </div>
           </div>
           <div>
-            <label htmlFor="category" className="mb-2 block text-sm font-medium">
+          <label htmlFor="image"
+            className={clsx(
+              'mb-2 block text-sm font-medium text-black',
+              {
+                'text-gray-300': selectedOption !== 'New category',
+              },
+            )}>
              Create a new category
             </label>
             <div className="w-full">
             <input
-                id="category"
-                name="category"
+                id="newCategory"
+                name="newCategory"
                 type="text"
                 step="0.01"
                 placeholder="Enter new category"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="category-error"
-                disabled = {selectedOption !== '#newCategory'}
-                
+                disabled = {selectedOption !== 'New category'}
+
               />
             </div>
           </div>
@@ -152,8 +156,11 @@ export default function EditProductForm({
                 name="image"
                 type="file"
                 step="0.01"
+                accept="image/png, image/jpg, image/jpeg"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
+                value = {imageLoadingMethod}
+                onChange={(e) => setImageLoadingMethod(e.target.value)}
               />
               </div>
             </div>
@@ -161,8 +168,14 @@ export default function EditProductForm({
 
 
           <div className="">
-            <label htmlFor="image" className="mb-2 block text-sm font-medium">
-              Upload image url
+            <label htmlFor="image"
+            className={clsx(
+              'mb-2 block text-sm font-medium text-black',
+              {
+                'text-gray-300': imageLoadingMethod !== '',
+              },
+            )}>
+              Upload image url (Only cloudinary image urls are supported)
             </label>
             <div className="mt-2 rounded-md">
               <div className="">
@@ -172,8 +185,14 @@ export default function EditProductForm({
                   type="text"
                   step="0.01"
                   defaultValue={product.image_url}
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  className={clsx(
+                    'peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 text-black',
+                    {
+                      'bg-white text-gray-300': imageLoadingMethod !== '',
+                    },
+                  )}
                   aria-describedby="image_url-error"
+                  disabled = {imageLoadingMethod !== ''}
                   />
                 </div>
             </div>
