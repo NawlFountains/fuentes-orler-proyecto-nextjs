@@ -2,16 +2,24 @@ import { fetchProducts } from "../lib/data";
 import { CardSkeleton } from "../ui/skeletons";
 import { Suspense } from "react";
 import Card from "../ui/search/card";
+
 export default async function Products() {
     const products = await fetchProducts();
     return (
-        <div >
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                    <Suspense fallback={<CardSkeleton />}>
-                {products.map((product) => {
-                    return (
-                        <Card key={product.id} id = {product.id} name={product.name} price={product.price} image_url={product.image_url}></Card> )
-                        } )}
+        <div className="container mx-auto p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <Suspense fallback={<CardSkeleton />}>
+                    {products.map((product) => {
+                        return (
+                            <Card 
+                                key={product.id} 
+                                id={product.id} 
+                                name={product.name} 
+                                price={product.price} 
+                                image_url={product.image_url} 
+                            />
+                        );
+                    })}
                 </Suspense>
             </div>
         </div>

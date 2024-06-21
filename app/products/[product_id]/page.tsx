@@ -16,17 +16,23 @@ export default async function Page({ params }: { params: { product_id: string } 
   }
 
   return (
-    <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-5">
-      <div className="rounded-xl p-2 md:col-span-2 shadow-sm border border-gray-200">
-        <Image src={product.image_url} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
+    <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-8">
+      <div className="rounded-xl p-4 md:col-span-2 shadow-lg border border-gray-300 bg-white">
+        <Image 
+          src={product.image_url} 
+          alt={product.name} 
+          width={400} 
+          height={300} 
+          className="rounded-xl mx-auto my-auto transition-transform duration-300 transform hover:scale-105"
+        />
       </div>
-      <div className="rounded-xl p-2 shadow-sm">
+      <div className="rounded-xl p-6 shadow-lg border border-gray-300 bg-white">
         <div>
-          <h1 className="text-3xl font-bold text-align-center">{product.name}</h1>
-          <p className="text-sm text-gray-500 my-10">{product.description}</p>
+          <h1 className="text-4xl font-bold text-center text-gray-800">{product.name}</h1>
+          <p className="text-base text-gray-600 my-6 leading-relaxed">{product.description}</p>
         </div>
-        <div className="grid grid-cols-2 mt-10">
-          <p className='text-3xl mx-auto'>${product.price}</p>
+        <div className="flex items-center justify-between mt-10">
+          <p className="text-4xl font-semibold text-gray-800">${product.price}</p>
           <ClientComponent product={product} />
         </div>
       </div>
