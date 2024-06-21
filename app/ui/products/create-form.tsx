@@ -9,10 +9,16 @@ import {
 import { Button } from '@/app/ui/button';
 import { createProduct } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
+import { useState } from 'react';
 
 export default function Form({ categories }: { categories: string[] }) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createProduct, initialState);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [imageLoadingMethod, setImageLoadingMethod] = useState('');
+  const handleChange = (event : any) => {
+    setSelectedOption(event.target.value);
+};
   return (
     <form action={dispatch} className="text-black">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -45,37 +51,60 @@ export default function Form({ categories }: { categories: string[] }) {
         </div>
 
         {/* Product category */}
-        <div className="mb-4">
-          <label htmlFor="category" className="mb-2 block text-sm font-medium">
-            Choose product category
-          </label>
-          <div className="relative">
-            <select
-              id="category"
-              name="category"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
-              aria-describedby="category-error"
-            >
-              <option value="" disabled>
-                Select a category
-              </option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label htmlFor="category" className="mb-2 block text-sm font-medium">
+               Choose product category
+            </label>
+            <div className="w-full">
+              <select
+                id="category"
+                name="category"
+                className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                defaultValue=""
+                aria-describedby="category-error"
+                value = {selectedOption}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select a category
                 </option>
-              ))}
-            </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+                <option value="#newCategory">
+                  New category
+                </option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        <div id="category-error" aria-live="polite" aria-atomic="true">
+          <div>
+            <label htmlFor="category" className="mb-2 block text-sm font-medium">
+             Create a new category
+            </label>
+            <div className="w-full">
+            <input
+                id="category"
+                name="category"
+                type="text"
+                step="0.01"
+                placeholder="Enter new category"
+                aria-describedby="category-error"
+                disabled = {selectedOption !== '#newCategory'}
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+        <div id="category-error" aria-live="polite" aria-atomic="true" className='align-middle'>
           {state.errors?.category &&
             state.errors.category.map((error: string) => (
               <p className="mt-2 text-sm text-red-500" key={error}>
                 {error}
               </p>
             ))}
-        </div>
         </div>
 
         {/* Product price */}
@@ -90,7 +119,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 name="price"
                 type="number"
                 step="0.01"
-                placeholder="Enter USD price"
+                placeholder="Enter price"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="price-error"
               />
@@ -135,8 +164,9 @@ export default function Form({ categories }: { categories: string[] }) {
           </div>
         </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Image */}
-      <div className="mb-4">
+        <div>
           <label htmlFor="image" className="mb-2 block text-sm font-medium">
             Upload image
           </label>
@@ -148,30 +178,32 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="file"
                 step="0.01"
                 placeholder="Select image to upload"
+                accept="image/png, image/jpg, image/jpeg"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
               />
+              </div>
             </div>
           </div>
+
+        {/* Image url */}
           <div>
-            
-            {/* Image url */}
-          <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
-            Upload image_url
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="image_url"
-                name="image_url"
-                type="text"
-                step="0.01"
-                placeholder="Upload link to image"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="image_url-error"
-              />
+            <label htmlFor="image_url" className="mb-2 block text-sm font-medium">
+              Upload url to image (Only images from cloudinary)
+            </label>
+            <div className="relative mt-2 rounded-md">
+              <div className="relative">
+                <input
+                  id="image_url"
+                  name="image_url"
+                  type="text"
+                  step="0.01"
+                  placeholder="Upload link to image"
+                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  aria-describedby="image_url-error"
+                />
+              </div>
             </div>
-          </div>
           </div>
   
         </div>

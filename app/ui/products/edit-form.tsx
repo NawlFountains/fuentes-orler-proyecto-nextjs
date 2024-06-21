@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateProduct } from '@/app/lib/actions';
+import { useState } from 'react';
 
 export default function EditProductForm({
   product,
@@ -19,6 +20,11 @@ export default function EditProductForm({
   categories: string [];
 }) {
   const updateProductWithId = updateProduct.bind(null, product.id);
+  const [selectedOption, setSelectedOption] = useState('');
+
+    const handleChange = (event : any) => {
+        setSelectedOption(event.target.value);
+    };
   return (
     <form action={updateProductWithId} className="text-black">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -42,8 +48,9 @@ export default function EditProductForm({
           </div>
         </div>
 
-        {/* Customer Name */}
-        <div className="mb-4">
+        {/* Product category */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-4">
+          <div>
           <label htmlFor="category" className="mb-2 block text-sm font-medium">
             Choose an category
           </label>
@@ -53,9 +60,14 @@ export default function EditProductForm({
               name="category"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={product.category}
+              value = {selectedOption}
+              onChange={handleChange}
             >
               <option value="">
                 Select a category
+              </option>
+              <option value="#newCategory">
+                New category
               </option>
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -63,7 +75,25 @@ export default function EditProductForm({
                 </option>
               ))}
             </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="category" className="mb-2 block text-sm font-medium">
+             Create a new category
+            </label>
+            <div className="w-full">
+            <input
+                id="category"
+                name="category"
+                type="text"
+                step="0.01"
+                placeholder="Enter new category"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="category-error"
+                disabled = {selectedOption !== '#newCategory'}
+                
+              />
+            </div>
           </div>
         </div>
 
@@ -109,12 +139,14 @@ export default function EditProductForm({
         </div>
         
           {/* Image url */}
-      <div className="mb-4">
+      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="">
           <label htmlFor="image" className="mb-2 block text-sm font-medium">
             Upload image
           </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
+          <div className="mt-2 rounded-md">
+            <div className="">
               <input
                 id="image"
                 name="image"
@@ -123,24 +155,35 @@ export default function EditProductForm({
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
               />
-              <img src={product.image_url} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
-            </div>
-          </div><label htmlFor="image" className="mb-2 block text-sm font-medium">
-            Upload image url
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="image_url"
-                name="image_url"
-                type="text"
-                step="0.01"
-                defaultValue={product.image_url}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="image_url-error"
-              />
+              </div>
             </div>
           </div>
+
+
+          <div className="">
+            <label htmlFor="image" className="mb-2 block text-sm font-medium">
+              Upload image url
+            </label>
+            <div className="mt-2 rounded-md">
+              <div className="">
+                <input
+                  id="image_url"
+                  name="image_url"
+                  type="text"
+                  step="0.01"
+                  defaultValue={product.image_url}
+                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  aria-describedby="image_url-error"
+                  />
+                </div>
+            </div>
+          </div>
+
+        </div>
+        <div className="rounded-xl">
+          <p className="mb-2 block text-sm font-medium">Current product image</p>
+          <img src={product.image_url} alt={product.name} width={400} height={200} className="rounded-xl mx-auto my-auto" />
+        </div>
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
