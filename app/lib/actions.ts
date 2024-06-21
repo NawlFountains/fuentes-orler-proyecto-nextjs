@@ -253,7 +253,15 @@ export async function createProduct(prevState: State, formData: FormData) {
             title: product.name,
             quantity: 1,
             unit_price: product.price,
-          }]
+          }],
+          back_urls: {
+            "success": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search",
+            "failure": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search",
+            "pending": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search"
+          },
+  
+          auto_return: "approved"
+  
         }
     });
     var redirectPath = preference.sandbox_init_point;
