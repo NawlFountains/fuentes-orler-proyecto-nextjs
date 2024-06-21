@@ -1,9 +1,19 @@
 import Image from 'next/image';
 import { fetchProduct } from '@/app/lib/data';
 import ClientComponent from '@/app/ui/ClientComponent';
+import { notFound } from 'next/navigation';
+import { isValidId } from '@/app/lib/utils';
 
 export default async function Page({ params }: { params: { product_id: string } }) {
+
+  if (!isValidId(params.product_id)) { 
+    notFound();
+  }
   const product = await fetchProduct(params.product_id);
+
+  if (!product) {
+    notFound();
+  }
 
   return (
     <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-5">

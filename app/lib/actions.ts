@@ -126,7 +126,6 @@ export async function createProduct(prevState: State, formData: FormData) {
     };
   }
  
-  // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath('/admin');
   redirect('/admin');
 }
