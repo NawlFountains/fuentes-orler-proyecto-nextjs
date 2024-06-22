@@ -1,28 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
-  
-  export default async function Card({
-    id,
-    name,
-    price,
-    image_url,
-  }: {
-    id: string;
-    name: string;
-    price: number;
-    image_url: string;
-  }) {
-    return (
-        <Link href={`/products/${id}`}>
-        <div className="rounded-xl p-2 shadow-sm border border-gray-200 space-y-2 grid grid-cols-1 w-full h-full">
-          <div className="flex h-160 md:h-80 justify-center items-center">
-              <Image src={image_url} alt={"Image of " + name} width={400} height={400} className="rounded-xl h-full w-full m-2 object-cover"/>
-          </div>
-          <div className="grid grid-cols-1 mx-4 h-auto" >
-            <h2 className="text-md text-gray-300">{name}</h2>
-            <p className="text-sm text-gray-500">${price}</p>
-          </div>
+
+export default async function Card({
+  id,
+  name,
+  price,
+  image_url,
+}: {
+  id: string;
+  name: string;
+  price: number;
+  image_url: string;
+}) {
+  return (
+    <Link href={`/products/${id}`}>
+      <div className="rounded-xl p-4 shadow-lg space-y-4 bg-white hover:shadow-2xl transition-shadow duration-300 ease-in-out w-full h-full">
+        <div className="flex h-60 md:h-80 justify-center items-center overflow-hidden rounded-xl">
+          <Image
+            src={image_url}
+            alt={"Image of " + name}
+            width={400}
+            height={400}
+            className="rounded-xl h-full w-full object-cover transform hover:scale-105 transition-transform duration-300 ease-in-out"
+          />
         </div>
-      </Link>
-    );
-  }
+        <div className="grid grid-cols-1 text-center">
+          <h2 className="text-lg font-semibold text-gray-800">{name}</h2>
+          <p className="text-md font-medium text-gray-600">${price.toFixed(2)}</p>
+        </div>
+      </div>
+    </Link>
+  );
+}
