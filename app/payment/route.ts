@@ -10,6 +10,8 @@ export async function POST(request:NextRequest) {
     const body = await request.json().then((data) => data as{data:{id:string}});
     const payment = await new Payment(client).get({id:body.data.id});
 
+    console.log(payment);
+
     if (payment !== null && payment !== undefined 
         && payment.id !== undefined  && payment.description !== undefined
         && payment.transaction_amount !== undefined && payment.status !== undefined) {
