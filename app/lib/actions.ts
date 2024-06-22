@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import MercadoPagoConfig, { Preference } from 'mercadopago';
-import { Product } from './definitions';
+import { Product, Transaction } from './definitions';
 
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
@@ -72,6 +72,20 @@ export type State = {
   message?: string | null;
 };
 
+// Error checking done in 
+export async function createTransaction(transaction: Transaction) {
+  try {
+    await sql`
+      INSERT INTO transactions (id, product_name, amount, status)
+      VALUES (${transaction.id}, ${transaction.product_name}, ${transaction.amount}, ${transaction.status})
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to create Transaction.',
+    };
+  }
+}
 
 export async function createProduct(prevState: State, formData: FormData) {
   // Validate form using Zod
@@ -270,3 +284,5 @@ export async function createProduct(prevState: State, formData: FormData) {
     if(redirectPath)
       redirect(redirectPath);
   }
+
+  

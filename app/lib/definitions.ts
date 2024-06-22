@@ -22,3 +22,10 @@ export type Product = {
   price: number;
   image_url: string;
 };
+
+export type Transaction = {
+  id: number;
+  product_name: string;
+  amount: number;
+  status: string;
+};

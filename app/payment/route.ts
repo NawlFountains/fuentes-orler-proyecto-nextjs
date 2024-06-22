@@ -1,5 +1,7 @@
 import MercadoPagoConfig, { Payment } from "mercadopago";
 import { NextRequest } from "next/server";
+import { createTransaction } from '@/app/lib/actions';
+import { Transaction } from "../lib/definitions";
 
 const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
@@ -7,12 +9,20 @@ export async function POST(request:NextRequest) {
 
     const body = await request.json().then((data) => data as{data:{id:string}});
     const payment = await new Payment(client).get({id:body.data.id});
-    const paymentDescription = {
-        status:payment.status,
-        id:payment.id,
-        amount:payment.transaction_amount,
-        message:payment.description
+
+    if (payment !== null && payment !== undefined 
+        && payment.id !== undefined  && payment.description !== undefined
+        && payment.transaction_amount !== undefined && payment.status !== undefined) {
+        const paymentDescription : Transaction = {
+            id:payment.id,
+            product_name:payment.description,
+            amount:payment.transaction_amount,
+            status:payment.status
+        }
+        console.log(paymentDescription);
+        await createTransaction(paymentDescription);
     }
-    console.log(paymentDescription);
+
+    
     return Response.json({sucess:true})
 }
