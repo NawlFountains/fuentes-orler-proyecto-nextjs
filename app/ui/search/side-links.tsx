@@ -27,7 +27,7 @@ export default function SideLinks({ categories }: { categories: string[] }) {
             },
           )}
         >
-          <p className="hidden md:block">{link.name}</p>
+          <p className="md:block">{link.name.charAt(0).toUpperCase() + link.name.slice(1)}</p>
         </Link>
       ))}
     </>

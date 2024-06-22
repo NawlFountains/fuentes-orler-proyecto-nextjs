@@ -1,7 +1,6 @@
-// utils/cartUtils.ts
-
 import { useState } from 'react';
 import { CartItem, Product } from './definitions';
+
 
 export const useCart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>(loadCartFromLocalStorage());

@@ -4,8 +4,7 @@ import React from 'react';
 import { useCart } from '../lib/cartUtils';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import ClientComponent from '../ui/ClientComponent';
-import { Slider } from '@material-tailwind/react';
+import BuyNowButton from '../ui/buy-now';
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
@@ -13,7 +12,9 @@ const ShoppingCart = () => {
   return (
     <div>
         {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+                <div className="flex h-full flex-col items-center justify-center gap-2">
+                    <p className="text-white text-xl md:my-4 md:text-3xl">Your cart is empty.</p>
+                </div>
         ) : (
         <div className="mt-6 flow-root text-white">
                 <div className="inline-block min-w-full align-middle">
@@ -138,9 +139,14 @@ const ShoppingCart = () => {
                         <p className='text-center postition-sticky bottom-0 rounded-md border border-gray-200 p-2'>
                           Total amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}
                           </p>
-                      </div>
-                  <button onClick={clearCart} className="rounded-md border border-gray-200 p-2 hover:bg-gray-100 hover:text-black my-4 px-4">Clear Cart</button>
-                  <ClientComponent products={cartItems} />
+                </div>
+                <div className="grid grid-cols-1 space-y-4 md:space-y-0 md:gap-4 md:grid-cols-3 my-4">
+                    <button onClick={clearCart} className="rounded-md w-full text-white font-bold py-2 px-4 bg-black hover:bg-gray-800 focus:bg-gray-800 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-75 shadow-md transition-all duration-300">Clear Cart</button>
+                    <div className = "col-span-2">
+                    <BuyNowButton products={cartItems} />
+                </div>
+
+                </div>
                 </div>
         )}
        

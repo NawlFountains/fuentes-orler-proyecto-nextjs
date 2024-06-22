@@ -45,61 +45,35 @@ export function RevenueChartSkeleton() {
   );
 }
 
-export function InvoiceSkeleton() {
+export default function HomeSkeleton() {
   return (
-    <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
-      <div className="flex items-center">
-        <div className="mr-2 h-8 w-8 rounded-full bg-gray-200" />
-        <div className="min-w-0">
-          <div className="h-5 w-40 rounded-md bg-gray-200" />
-          <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
-        </div>
+    <>
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+        <CarouselSkeleton />
+        <CarouselSkeleton />
       </div>
-      <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
-    </div>
+      <div className={`${shimmer} relative w-full overflow-hidden rounded-xl m-10`}>
+        <div className="h-8 w-full" />
+      </div>
+      <div className={`${shimmer} relative w-full overflow-hidden rounded-xl m-10`}>
+        <div className="h-8 w-full" />
+      </div>
+      <div className={`${shimmer} relative w-full overflow-hidden rounded-xl m-10`}>
+        <div className="h-8 w-full" />
+      </div>
+    </>
   );
 }
-
-export function LatestInvoicesSkeleton() {
+export function CarouselSkeleton() {
   return (
-    <div
-      className={`${shimmer} relative flex w-full flex-col overflow-hidden md:col-span-4`}
-    >
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
-        <div className="bg-grey-100 px-6">
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <div className="flex items-center pb-2 pt-6">
-            <div className="h-5 w-5 rounded-full bg-gray-200" />
-            <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
+    <div className={`relative w-full overflow-hidden col-span-1`}>
+      <div className={`relative rounded-xl p-2 shadow-sm border border-gray-200 space-y-2`}>
+        <div className="flex">
+          <div className={`rounded-xl mx-auto w-[400px] h-[400px] bg-gray-200 shadow-sm`}>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-export default function DashboardSkeleton() {
-  return (
-    <>
-      <div
-        className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
-      />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
-        <CardSkeleton />
-      </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChartSkeleton />
-        <LatestInvoicesSkeleton />
-      </div>
-    </>
+     </div>
   );
 }
 
@@ -110,7 +84,7 @@ export function TableRowSkeleton() {
       <td className="relative overflow-hidden whitespace-nowrap py-3 pl-6 pr-3">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-gray-100"></div>
-          <div className="h-6 w-48 rounded bg-gray-50"></div>
+          <div className="h-6 w-32 rounded bg-gray-50"></div>
         </div>
       </td>
       {/* Category */}
@@ -160,7 +134,7 @@ export function ProductsTableSkeleton() {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle ">
-        <div className="rounded-lg bg-black p-2 md:pt-0">
+        <div className="rounded-lg p-2 md:pt-0">
           <div className="md:hidden text-white">
             <ProductsMobileSkeleton />
             <ProductsMobileSkeleton />
@@ -189,7 +163,7 @@ export function ProductsTableSkeleton() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-black">
+            <tbody className="">
               <TableRowSkeleton />
               <TableRowSkeleton />
               <TableRowSkeleton />
