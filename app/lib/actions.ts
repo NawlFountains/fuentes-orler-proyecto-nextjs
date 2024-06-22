@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import MercadoPagoConfig, { Preference } from 'mercadopago';
-import { Product, Transaction } from './definitions';
+import { CartItem, Product, Transaction } from './definitions';
 
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
@@ -256,19 +256,17 @@ export async function createProduct(prevState: State, formData: FormData) {
 
   const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
-  export async function buyProduct(product:Product) {
-    
-    console.log('buying...');
+  export async function buyProducts(products:CartItem []) {
     const preference = await new Preference(client).create({
         body: {
-          items: [{
+          items: products.map(product => ({
             id: product.id,
             title: product.name,
             description: product.id,
-            quantity: 1,
+            quantity: product.quantity,
             unit_price: product.price,
-
-          }],
+  
+          })),
           back_urls: {
             "success": process.env.NEXT_PUBLIC_APP_URL + "/search",
             "failure": process.env.NEXT_PUBLIC_APP_URL + "/search",

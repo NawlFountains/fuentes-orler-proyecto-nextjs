@@ -1,11 +1,12 @@
 'use client';
 
-import { buyProduct } from '@/app/lib/actions';
+import { buyProducts } from '@/app/lib/actions';
+import { CartItem, Product } from '../lib/definitions';
 
-export default function ClientComponent({ product }: { product: any }) {
+export default function ClientComponent({ products }: { products: CartItem [] }) {
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    await buyProduct(product);
+    await buyProducts(products);
   };
 
   return (

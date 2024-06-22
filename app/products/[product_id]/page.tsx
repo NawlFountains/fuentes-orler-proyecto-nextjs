@@ -15,6 +15,7 @@ export default async function Page({ params }: { params: { product_id: string } 
   if (!product) {
     notFound();
   }
+  let cartItem = [{...product, quantity: 1}];
 
   return (
     <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-8">
@@ -35,7 +36,7 @@ export default async function Page({ params }: { params: { product_id: string } 
         <div className="flex items-center justify-between mt-10">
           <p className="text-4xl font-semibold text-gray-800">${product.price}</p>
           <AddCartButton product={product} />
-          <ClientComponent product={product} />
+          <ClientComponent products={cartItem} />
         </div>
       </div>
     </div>

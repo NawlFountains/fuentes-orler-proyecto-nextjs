@@ -140,7 +140,7 @@ const ShoppingCart = () => {
                           </p>
                       </div>
                   <button onClick={clearCart} className="rounded-md border border-gray-200 p-2 hover:bg-gray-100 hover:text-black my-4 px-4">Clear Cart</button>
-                  {/* <ClientComponent product={cartItems} /> */}
+                  <ClientComponent products={cartItems} />
                 </div>
         )}
        
