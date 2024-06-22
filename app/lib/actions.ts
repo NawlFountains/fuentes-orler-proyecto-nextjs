@@ -73,11 +73,11 @@ export type State = {
 };
 
 // Error checking done in 
-export async function createTransaction(transaction: Transaction) {
+export async function createTransaction(transaction : { id: number , product_name: string, amount: number, status: string }) {
   try {
     await sql`
-      INSERT INTO transactions (id, product_name, amount, status, date)
-      VALUES (${transaction.id}, ${transaction.product_name}, ${transaction.amount}, ${transaction.status}, ${transaction.date})
+      INSERT INTO transactions (id, product_name, amount, status)
+      VALUES (${transaction.id}, ${transaction.product_name}, ${transaction.amount}, ${transaction.status})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.

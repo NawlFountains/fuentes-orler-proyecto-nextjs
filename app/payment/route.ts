@@ -14,13 +14,11 @@ export async function POST(request:NextRequest) {
     if (payment !== null && payment !== undefined 
         && payment.id !== undefined  && payment.description !== undefined
         && payment.transaction_amount !== undefined && payment.status !== undefined) {
-        const paymentDescription : Transaction = {
+        const paymentDescription = {
             id:payment.id,
             product_name:payment.description,
             amount:payment.transaction_amount,
             status:payment.status,
-            //Get new date and format it to be accepetble fro sql TIMESTAMP
-            date: getCurrentTimestamp()
         }
         console.log(paymentDescription);
         await createTransaction(paymentDescription);
