@@ -3,7 +3,8 @@
 import {
   HomeIcon,
   BuildingStorefrontIcon,
-  IdentificationIcon 
+  IdentificationIcon,
+  ShoppingCartIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -17,6 +18,12 @@ const links = [
     href: '/search', 
     auth: false,
     icon: BuildingStorefrontIcon,
+  },
+  {
+    name: 'Cart',
+    href: '/cart',
+    auth: false,
+    icon: ShoppingCartIcon ,
   },
   {
     name: 'Admin panel',

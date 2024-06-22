@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { fetchProduct } from '@/app/lib/data';
 import ClientComponent from '@/app/ui/ClientComponent';
+import AddCartButton from '@/app/ui/add-cart';
 import { notFound } from 'next/navigation';
 import { isValidId } from '@/app/lib/utils';
 
@@ -33,6 +34,7 @@ export default async function Page({ params }: { params: { product_id: string } 
         </div>
         <div className="flex items-center justify-between mt-10">
           <p className="text-4xl font-semibold text-gray-800">${product.price}</p>
+          <AddCartButton product={product} />
           <ClientComponent product={product} />
         </div>
       </div>

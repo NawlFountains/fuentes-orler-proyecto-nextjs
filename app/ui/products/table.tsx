@@ -80,7 +80,7 @@ export default async function ProductsTable({
                         className="rounded-full"
                         width={28}
                         height={28}
-                        alt={`${product.name}'s profile picture`}
+                        alt={`Image of ${product.name}'`}
                       />
                       <p>{product.name}</p>
                     </div>

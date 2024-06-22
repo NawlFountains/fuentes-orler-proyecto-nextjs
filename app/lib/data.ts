@@ -1,11 +1,13 @@
 import { sql } from '@vercel/postgres';
 import {
   User,
-  Product,
   ProductsTable,
   Transaction,
+  Product
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
+
+let cart : Product [] = [];
 
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredProducts(
@@ -49,6 +51,18 @@ export async function fetchProductsPages(query: string) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of products.');
   }
+}
+
+export async function fetchCart() {
+  return cart;
+}
+
+export async function addToCart(product: Product) {
+  cart.push(product);
+}
+
+export async function removeFromCart(product: Product) {
+  cart = cart.filter((item) => item.id !== product.id);
 }
 
 export async function getUser(email: string) {
