@@ -35,3 +35,18 @@ export const isValidId = (uuid : string) => {
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   return uuidPattern.test(uuid);
 };
+
+export function formatTimestamp(timestamp: string) {
+  const date = new Date(timestamp);
+
+    // Extract the hours, minutes, day, month, and year
+    const hours = date.getHours().toString().padStart(2, '0');  // Ensure two digits
+    const minutes = date.getMinutes().toString().padStart(2, '0');  // Ensure two digits
+    const seconds = date.getSeconds().toString().padStart(2, '0');  // Ensure two digits
+    const day = date.getDate().toString().padStart(2, '0');  // Ensure two digits
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');  // Ensure two digits
+    const year = date.getFullYear();
+
+    // Return the formatted string
+    return `${hours}:${minutes}:${seconds}, ${day}/${month}/${year}`;
+}

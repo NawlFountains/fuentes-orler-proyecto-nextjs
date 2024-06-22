@@ -3,6 +3,7 @@ import {
   User,
   Product,
   ProductsTable,
+  Transaction,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -140,6 +141,25 @@ export async function fetchProductsByCategory(product_category:string) {
       ...product,
     }))
     return products;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product by category.');
+  }
+}
+
+export async function fetchLatestsTransactions(amount: number) {
+noStore();
+  try {
+    const data = await sql`
+            SELECT *
+    FROM transactions
+    ORDER BY date DESC
+    LIMIT ${amount}
+    `;
+    const transactions : Transaction [] = data.rows.map((product: any) => ({
+      ...product,
+    }))
+    return transactions;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch product by category.');

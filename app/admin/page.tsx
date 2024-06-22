@@ -2,11 +2,12 @@ import Pagination from '@/app/ui/products/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/products/table';
 import { CreateProduct } from '@/app/ui/products/buttons';
-import { lusitana } from '@/app/ui/fonts';
 import { ProductsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchProductsPages } from '@/app/lib/data';
+import { fetchLatestsTransactions, fetchProductsPages } from '@/app/lib/data';
+import LatestsTransactions from '../ui/products/latests-transactions';
  
+const MAX_TRANSACTIONS = 5;
 export default async function Page({searchParams,} : {searchParams?: {
   query?: string;
   page?: string;
@@ -16,6 +17,7 @@ export default async function Page({searchParams,} : {searchParams?: {
   const currentPage = Number(searchParams?.page) || 1;
 
   const totalPages = await fetchProductsPages(query);
+  const transactions = await fetchLatestsTransactions(MAX_TRANSACTIONS);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -29,6 +31,9 @@ export default async function Page({searchParams,} : {searchParams?: {
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
+      </div>
+      <div>
+      <LatestsTransactions transactions={transactions} />
       </div>
     </div>
   );
