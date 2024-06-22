@@ -14,15 +14,12 @@ export default async function Page() {
   const rightProducts = products.slice(Math.floor(NUMBER_OF_PRODUCTS / 2), NUMBER_OF_PRODUCTS);
   return (
     <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
-      </h1>
-      <div className="grid grid-cols-1 gap-4 md:flex md:space-x-4 max-h-[800px]">
-        <div className="grid min-h-[80px] w-3/4 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible md:col-span-2">
+      <div className="grid grid-cols-1 gap-4 md:flex md:space-x-4 md:max-h-[800px]">
+        <div className="grid min-h-[80px] w-3/4 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible col-span-1 mx-auto md:col-span-2">
           <CarouselTransition products={leftProducts} />
         </div>
         <div className = "md:col-span-1"> </div>
-        <div className="grid min-h-[80px] w-3/4 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible md:col-span-2">
+        <div className="grid min-h-[80px] w-3/4 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible col-span-1 mx-auto md:col-span-2">
           <CarouselTransition products={rightProducts} />
         </div>
       </div>
