@@ -13,5 +13,5 @@ export async function POST(request:NextRequest) {
         message:payment.description
     }
     console.log(paymentDescription);
-    
+    return Response.json({sucess:true})
 }

@@ -248,8 +248,8 @@ export async function createProduct(prevState: State, formData: FormData) {
     const preference = await new Preference(client).create({
         body: {
           items: [{
-            id: '1',
-            title: product.name,
+            id: product.id,
+            title: product.id + ' - ' + product.name,
             quantity: 1,
             unit_price: product.price,
           }],
