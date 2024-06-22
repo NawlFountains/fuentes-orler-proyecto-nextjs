@@ -28,4 +28,5 @@ export type Transaction = {
   product_name: string;
   amount: number;
   status: string;
+  date: string;
 };
