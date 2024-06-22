@@ -249,9 +249,11 @@ export async function createProduct(prevState: State, formData: FormData) {
         body: {
           items: [{
             id: product.id,
-            title: product.id,
+            title: product.name,
+            description: product.id,
             quantity: 1,
             unit_price: product.price,
+
           }],
           back_urls: {
             "success": process.env.NEXT_PUBLIC_APP_URL + "/search",
