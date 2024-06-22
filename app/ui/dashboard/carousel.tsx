@@ -140,7 +140,7 @@ export function CarouselTransition( { products } : { products : Product[] } ) {
       )} >
       {products.map((product) => (
         <Link key={product.id} href={`/products/${product.id}`}>
-        <Image key={product.id} src={product.image_url} alt={"Image of "+product.name} className="rounded-xl w-full h-full object-cover" width={800} height={800}/>
+        <Image key={product.id} src={product.image_url} alt={"Image of "+product.name} className="rounded-xl w-full h-full object-cover" width={1200} height={1200}/>
         </Link>
       ))}
     </Carousel>
