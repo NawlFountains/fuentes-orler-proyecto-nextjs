@@ -263,7 +263,7 @@ export async function createProduct(prevState: State, formData: FormData) {
   
         }
     });
-    var redirectPath = preference.sandbox_init_point;
+    var redirectPath = preference.init_point;
     console.log(redirectPath);
     if(redirectPath)
       redirect(redirectPath);
