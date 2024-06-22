@@ -254,9 +254,9 @@ export async function createProduct(prevState: State, formData: FormData) {
             unit_price: product.price,
           }],
           back_urls: {
-            "success": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search",
-            "failure": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search",
-            "pending": "https://clothingstoreproject-nahuels-projects-ddf2166f.vercel.app/search"
+            "success": process.env.NEXT_PUBLIC_APP_URL + "/search",
+            "failure": process.env.NEXT_PUBLIC_APP_URL + "/search",
+            "pending": process.env.NEXT_PUBLIC_APP_URL + "/search"
           },
   
           auto_return: "approved"

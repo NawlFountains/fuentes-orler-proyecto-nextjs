@@ -94,6 +94,22 @@ export async function fetchProducts() {
     throw new Error('Failed to fetch product types.'+err);
   }
 }
+export async function fetchHomeProducts(  amount : number ) {
+  try {
+    const data = await sql`
+      SELECT *
+      FROM products
+      LIMIT ${amount}
+    `;
+    const products = data.rows.map((product: any) => ({
+      ...product,
+    }))
+    return products;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch product types.'+err);
+  }
+}
 export async function fetchProduct(product_id:string) {
   noStore();
   try {
