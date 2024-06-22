@@ -30,7 +30,7 @@ export default async function LatestsTransactions({transactions} : {transactions
                       </div>
                       <div>
                         <p className="m-2 justify-self-end text-xl font-medium text-center">
-                            {transaction.status.toLocaleUpperCase()}
+                        {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="text-red-500">REJECTED</p> : <p className="text-yellow-500">PENDING</p>}
                         </p>
                       </div>
                   </div>
@@ -90,7 +90,7 @@ export default async function LatestsTransactions({transactions} : {transactions
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                         <div className="flex items-center gap-3">
-                            {transaction.status.toLocaleUpperCase()}
+                            {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="text-red-500">REJECTED</p> : <p className="text-yellow-500">PENDING</p>}
                         </div>
                     </td>
                   </tr>
