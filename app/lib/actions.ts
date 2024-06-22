@@ -249,7 +249,7 @@ export async function createProduct(prevState: State, formData: FormData) {
         body: {
           items: [{
             id: product.id,
-            title: product.id + ' - ' + product.name,
+            title: product.id,
             quantity: 1,
             unit_price: product.price,
           }],
