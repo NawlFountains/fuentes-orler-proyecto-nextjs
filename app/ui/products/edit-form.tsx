@@ -52,7 +52,7 @@ export default function EditProductForm({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-4">
           <div>
           <label htmlFor="category" className="mb-2 block text-sm font-medium">
-            Choose product`&apos;`s category
+            Choose product&apos;s category
           </label>
           <div className="relative">
             <select
@@ -70,7 +70,7 @@ export default function EditProductForm({
               </option>
               {categories.map((category) => (
                 <option key={category} value={category} >
-                  {category}
+                  {category.toLocaleUpperCase()}
                 </option>
               ))}
             </select>

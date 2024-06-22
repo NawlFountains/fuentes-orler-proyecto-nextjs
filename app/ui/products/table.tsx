@@ -33,7 +33,7 @@ export default async function ProductsTable({
                       />
                       <p>{product.name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{product.category}</p>
+                    <p className="text-sm text-gray-500">{product.category.toLocaleUpperCase()}</p>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
@@ -86,7 +86,7 @@ export default async function ProductsTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {product.category}
+                    {product.category.toLocaleUpperCase()}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     ${product.price}

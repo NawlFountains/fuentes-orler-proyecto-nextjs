@@ -33,7 +33,9 @@ export default async function Page({searchParams,} : {searchParams?: {
         <Pagination totalPages={totalPages} />
       </div>
       <div>
-      <LatestsTransactions transactions={transactions} />
+        <Suspense fallback={<ProductsTableSkeleton />}>
+          <LatestsTransactions transactions={transactions} />
+        </Suspense>
       </div>
     </div>
   );

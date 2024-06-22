@@ -52,7 +52,7 @@ export default function Form({ categories }: { categories: string[] }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label htmlFor="category" className="mb-2 block text-sm font-medium">
-            Choose product`&apos;`s category
+            Choose product&apos;s category
             </label>
             <div className="w-full">
               <select
@@ -71,7 +71,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 </option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
-                    {category}
+                    {category.toLocaleUpperCase()}
                   </option>
                 ))}
               </select>

@@ -126,6 +126,8 @@ export async function createProduct(prevState: State, formData: FormData) {
   } else {
     image_url = image;
   }
+
+  category = category.toLocaleLowerCase();
   
   // Insert data into the database
   try {
@@ -179,6 +181,7 @@ export async function createProduct(prevState: State, formData: FormData) {
     image_url = image;
   }
   
+  category = category.toLocaleLowerCase();
     try {
     await sql`
       UPDATE products

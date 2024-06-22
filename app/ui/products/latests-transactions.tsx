@@ -7,9 +7,11 @@ export default async function LatestsTransactions({transactions} : {transactions
         <div className="inline-block min-w-full align-middle">
           <div className="rounded-lg p-2 md:pt-0 border border-gray-200 bg-gray-800 shadow-sm">
             <div className="md:hidden border-b pb-3 bg-gray-800">
+              <div>
                 <p className="text-xl font-bold text-center">
                 Latests transactions
                 </p>
+              </div>
             </div>
             <div className="md:hidden">
               {transactions?.map((transaction) => (
@@ -29,9 +31,7 @@ export default async function LatestsTransactions({transactions} : {transactions
                         </p>
                       </div>
                       <div>
-                        <p className="m-2 justify-self-end text-xl font-medium text-center">
-                        {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="text-red-500">REJECTED</p> : <p className="text-yellow-500">PENDING</p>}
-                        </p>
+                        {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-red-500">REJECTED</p> : <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">PENDING</p>}
                       </div>
                   </div>
                   <div className="flex w-full pt-4">
@@ -90,7 +90,7 @@ export default async function LatestsTransactions({transactions} : {transactions
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                         <div className="flex items-center gap-3">
-                            {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="text-red-500">REJECTED</p> : <p className="text-yellow-500">PENDING</p>}
+                           {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-red-500">REJECTED</p> : <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">PENDING</p>}
                         </div>
                     </td>
                   </tr>
