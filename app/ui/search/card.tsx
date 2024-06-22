@@ -16,7 +16,7 @@ import Link from 'next/link';
         <Link href={`/products/${id}`}>
         <div className="rounded-xl p-2 shadow-sm border border-gray-200 space-y-2 grid grid-cols-1 w-full h-full">
           <div className="flex h-160 md:h-80 justify-center items-center">
-              <Image src={image_url} alt={"Image of " + name} width={200} height={200} className="rounded-xl h-full w-full m-2 object-cover"/>
+              <Image src={image_url} alt={"Image of " + name} width={400} height={400} className="rounded-xl h-full w-full m-2 object-cover"/>
           </div>
           <div className="grid grid-cols-1 mx-4 h-auto" >
             <h2 className="text-md text-gray-300">{name}</h2>

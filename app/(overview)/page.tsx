@@ -1,7 +1,3 @@
-import { lusitana } from '@/app/ui/fonts';
-import { Suspense } from 'react';
-import { RevenueChartSkeleton } from '@/app/ui/skeletons';
-import { CardSkeleton } from '@/app/ui/skeletons';
 import { fetchHomeProducts } from '@/app/lib/data';
 import { CarouselTransition } from '../ui/dashboard/carousel';
 import { Product } from '../lib/definitions';
@@ -25,7 +21,7 @@ export default async function Page() {
       </div>
       <div className="grid grid-cols-1 py-4 my-4">
         <p className="m-4">
-        Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas `&quot;`Letraset`&quot;`, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum
+        At Store, we are dedicated to offering you the latest fashion trends with the best quality at affordable prices. For more information on shipping, returns, terms and conditions, or our privacy policy, please visit the respective sections on our website. Contact us at email@store.com or +1 (123) 456-7890, Monday to Friday from 9:00 AM to 6:00 PM. Follow us on social media: Facebook, Instagram, and Twitter. Subscribe to our newsletter to receive the latest news and exclusive offers. © 2024 Store  All rights reserved.
         </p>
         </div>
     </main>
