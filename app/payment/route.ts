@@ -2,7 +2,6 @@ import MercadoPagoConfig, { Payment } from "mercadopago";
 import { NextRequest } from "next/server";
 import { createTransaction } from '@/app/lib/actions';
 import { Transaction } from "../lib/definitions";
-import { getCurrentTimestamp } from "../lib/utils";
 
 const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
