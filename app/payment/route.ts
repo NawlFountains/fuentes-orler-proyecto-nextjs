@@ -33,15 +33,15 @@ export async function POST(request:NextRequest) {
             const shippingDetails = {
                 payment_id:payment.id,
                 street_name: (payment.additional_info?.shipments?.receiver_address as any)?.street_name,
-                street_number: (payment.additional_info?.shipments?.receiver_address as any)?.street_number,
+                street_number: (payment.additional_info?.shipments?.receiver_address as any)?.street_number ,
                 floor:payment.additional_info?.shipments?.receiver_address?.floor || null,
                 apartment:payment.additional_info?.shipments?.receiver_address?.apartment || null,
             }
+            console.log(shippingDetails);
+            await createShippment(shippingDetails);
+        }
         console.log(paymentDescription);
-        console.log(shippingDetails);
         await createTransaction(paymentDescription);
-        await createShippment(shippingDetails);
-    }
     }
 
     
