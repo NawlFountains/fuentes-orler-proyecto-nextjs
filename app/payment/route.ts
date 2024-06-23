@@ -9,6 +9,7 @@ export async function POST(request:NextRequest) {
     const body = await request.json().then((data) => data as{data:{id:string}});
     const payment = await new Payment(client).get({id:body.data.id});
 
+    console.log(payment);
     console.log(payment.additional_info?.items);
     if (payment.additional_info?.items !== undefined) {
         for (const item of payment.additional_info.items) {
