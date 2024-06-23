@@ -3,9 +3,11 @@ import {
   User,
   ProductsTable,
   Transaction,
-  Product
+  Product,
+  ShippingDetails
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
+import { ShipmentsPayment } from 'mercadopago/dist/clients/payment/commonTypes';
 
 let cart : Product [] = [];
 
@@ -179,3 +181,22 @@ noStore();
     throw new Error('Failed to fetch product by category.');
   }
 }
+export async function fetchLatestShipments(amount: number) {
+  noStore();
+    try {
+      const data = await sql`
+              SELECT *
+      FROM shipments
+      ORDER BY created_at DESC
+      LIMIT ${amount}
+      `;
+      const shipments : ShippingDetails [] = data.rows.map((shipment: any) => ({
+        ...shipment,
+      }))
+      return shipments;
+    } catch (err) {
+      console.error('Database Error:', err);
+      throw new Error('Failed to fetch product latest shipments.');
+    }
+  }
+  

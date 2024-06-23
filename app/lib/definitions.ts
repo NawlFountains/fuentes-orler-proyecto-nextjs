@@ -25,7 +25,7 @@ export type Product = {
 
 export type Transaction = {
   id: number;
-  product_name: string;
+  payer_email: string;
   amount: number;
   status: string;
   date: string;
@@ -42,9 +42,18 @@ export type CartItem = {
 };
 
 export type Address = {
-  zip_code: string;
   street_name: string;
   street_number: number;
   floor: string | null;
   apartment: string | null;
+};
+
+export type ShippingDetails = {
+  id: string;
+  payment_id: number;
+  street_name: string;
+  street_number: number;
+  floor: string | null;
+  apartment: string | null;
+  status: string;
 };

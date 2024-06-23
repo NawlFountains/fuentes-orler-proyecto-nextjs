@@ -1,46 +1,48 @@
-import { Transaction } from "@/app/lib/definitions";
-import { formatTimestamp } from "@/app/lib/utils";
+import { ShippingDetails } from "@/app/lib/definitions";
 
-export default async function LatestsTransactions({transactions} : {transactions: Transaction[]}) {
+export default async function LatestsShipments({shipments} : {shipments: ShippingDetails[]}) {
     return (
       <div className="mt-6 flow-root text-white">
-       {transactions.length == 0 ? <div></div> :
+       {shipments.length == 0 ? <div></div> :
         <div className="inline-block min-w-full align-middle">
           <div className="rounded-lg p-2 md:pt-0 border border-gray-200 bg-gray-800 shadow-sm">
             <div className="md:hidden border-b pb-3 bg-gray-800">
               <div>
                 <p className="text-xl font-bold text-center">
-                Latests transactions
+                Latests Shipments
                 </p>
               </div>
             </div>
             <div className="md:hidden">
-              {transactions?.map((transaction) => (
+              {shipments?.map((shipment) => (
                 <div
-                  key={transaction.id}
+                  key={shipment.id}
                   className="mb-2 w-full p-4 border-b border-gray-100"
                 >
                     <div className="flex items-center justify-between pb-2">
                   </div>
                   <div className="grid grid-cols-3 items-center  border-b pb-4">
                       <div className="m-2 items-center text-xl font-medium text-center">
-                        <p>{transaction.payer_email}</p>
+                        <p>{shipment.payment_id}</p>
                       </div>
                       <div>
                         <p className="m-2 justify-self-end text-xl font-medium text-center">
-                            ${transaction.amount}
+                            {shipment.street_name}, {shipment.street_number}
                         </p>
                       </div>
                       <div>
-                        {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-red-500">REJECTED</p> : <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">PENDING</p>}
+                        {shipment.status == "delivered" ? (
+                          <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">
+                            DELIVERED
+                          </p>
+                        ) : (
+                          <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">
+                            PENDING
+                          </p>
+                        )}
                       </div>
                   </div>
                   <div className="flex w-full pt-4">
-                    <div className="w-full">
-                      <p className="text-xl font-medium text-center">
-                        {formatTimestamp(transaction.date.toString())}
-                      </p>
-                    </div>
                   </div>
                 </div>
               ))}
@@ -52,13 +54,10 @@ export default async function LatestsTransactions({transactions} : {transactions
                     ID
                   </th>
                   <th scope="col" className="px-4 py-5 ">
-                    Payer email
+                    Payment ID
                   </th>
                   <th scope="col" className="px-3 py-5 ">
-                    Price
-                  </th>
-                  <th scope="col" className="px-3 py-5">
-                    Date
+                    Address
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Status
@@ -66,32 +65,37 @@ export default async function LatestsTransactions({transactions} : {transactions
                 </tr>
               </thead>
               <tbody className="">
-                {transactions?.map((transaction) => (
+                {shipments?.map((shipment) => (
                   <tr
-                    key={transaction.id}
+                    key={shipment.id}
                     className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                   >
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
-                        <p>{transaction.id}</p>
+                        <p>{shipment.id}</p>
                       </div>
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
-                        <p>{transaction.payer_email}</p>
+                        <p>{shipment.payment_id}</p>
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      ${transaction.amount}
+                    <p className="m-2 justify-self-end text-xl font-medium text-center">
+                      {shipment.street_name}, {shipment.street_number}
+                    </p>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                         <div className="flex items-center gap-3">
-                        {formatTimestamp(transaction.date.toString())}
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-3">
-                        <div className="flex items-center gap-3">
-                           {transaction.status.toLocaleUpperCase() === 'APPROVED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">APPROVED</p> : transaction.status.toLocaleUpperCase() === 'REJECTED' ? <p className="m-2 justify-self-end text-xl font-medium text-center text-red-500">REJECTED</p> : <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">PENDING</p>}
+                        {shipment.status == "delivered" ? (
+                          <p className="m-2 justify-self-end text-xl font-medium text-center text-green-500">
+                            DELIVERED
+                          </p>
+                        ) : (
+                          <p className="m-2 justify-self-end text-xl font-medium text-center text-yellow-500">
+                            PENDING
+                          </p>
+                        )}
                         </div>
                     </td>
                   </tr>

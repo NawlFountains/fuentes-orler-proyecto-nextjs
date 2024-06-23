@@ -1,6 +1,7 @@
 import MercadoPagoConfig, { Payment } from "mercadopago";
 import { NextRequest } from "next/server";
-import { createTransaction } from '@/app/lib/actions';
+import { createShippment, createTransaction } from '@/app/lib/actions';
+import { ShippingDetails, Transaction } from "../lib/definitions";
 
 const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
@@ -20,15 +21,27 @@ export async function POST(request:NextRequest) {
 
     if (payment !== null && payment !== undefined 
         && payment.id !== undefined  && payment.description !== undefined
-        && payment.transaction_amount !== undefined && payment.status !== undefined) {
+        && payment.transaction_amount !== undefined && payment.status !== undefined
+        && payment.payer !== undefined && payment.payer.email !== undefined) {
         const paymentDescription = {
             id:payment.id,
-            product_name:payment.description,
+            payer_email:payment.payer.email,
             amount:payment.transaction_amount,
             status:payment.status,
         }
+        if (payment.status === 'approved') {
+            const shippingDetails = {
+                payment_id:payment.id,
+                street_name: (payment.additional_info?.shipments?.receiver_address as any)?.street_name,
+                street_number: (payment.additional_info?.shipments?.receiver_address as any)?.street_number,
+                floor:payment.additional_info?.shipments?.receiver_address?.floor || null,
+                apartment:payment.additional_info?.shipments?.receiver_address?.apartment || null,
+            }
         console.log(paymentDescription);
+        console.log(shippingDetails);
         await createTransaction(paymentDescription);
+        await createShippment(shippingDetails);
+    }
     }
 
     

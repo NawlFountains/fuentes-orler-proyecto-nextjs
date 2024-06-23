@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import MercadoPagoConfig, { Preference } from 'mercadopago';
-import { Address, CartItem, Product, Transaction } from './definitions';
+import { Address, CartItem, Product, ShippingDetails, Transaction } from './definitions';
 
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
@@ -93,11 +93,26 @@ export type State = {
 };
 
 // Error checking done in 
-export async function createTransaction(transaction : { id: number , product_name: string, amount: number, status: string }) {
+export async function createTransaction(transaction : { id: number , payer_email: string, amount: number, status: string }) {
   try {
     await sql`
-      INSERT INTO transactions (id, product_name, amount, status)
-      VALUES (${transaction.id}, ${transaction.product_name}, ${transaction.amount}, ${transaction.status})
+      INSERT INTO transactions (id, payer_email, amount, status)
+      VALUES (${transaction.id}, ${transaction.payer_email}, ${transaction.amount}, ${transaction.status})
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to create Transaction.',
+    };
+  }
+}
+
+export async function createShippment(shippingDetails : { payment_id: number, street_name: string, street_number: number, floor: string | null, apartment: string | null }) {
+
+  try {
+    await sql`
+      INSERT INTO shipments (payment_id, street_name, street_number, floor, apartment, status)
+      VALUES (${shippingDetails.payment_id}, ${shippingDetails.street_name}, ${shippingDetails.street_number}, ${shippingDetails.floor}, ${shippingDetails.apartment}, 'pending')
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -297,7 +312,6 @@ export async function createProduct(prevState: State, formData: FormData) {
           },
           shipments: {
             receiver_address: {
-              zip_code: shippingAddress.zip_code,
               street_number: shippingAddress.street_number,
               street_name: shippingAddress.street_name,
               ...(shippingAddress.floor && { floor: shippingAddress.floor }),

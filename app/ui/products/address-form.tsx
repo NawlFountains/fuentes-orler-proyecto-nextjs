@@ -18,13 +18,11 @@ export default function Form({ cartItems }: { cartItems: CartItem[] }) {
     // Check if required fields are not null or empty
     if (
       formData.get('street_name') !== null &&
-      formData.get('street_number') !== null &&
-      formData.get('zip_code') !== null
+      formData.get('street_number') !== null
     ) {
       let shipping_address: Address = {
         street_name: formData.get('street_name') as string,
         street_number: formData.get('street_number') as unknown as number,
-        zip_code: formData.get('zipcode') as string,
         floor: formData.get('floor') as string | null,
         apartment: formData.get('apartment') as string | null,
       };
@@ -42,28 +40,29 @@ export default function Form({ cartItems }: { cartItems: CartItem[] }) {
     <form onSubmit={handleFormSubmit} className="text-white">
       <div className="rounded-md border border-gray-200 p-4 md:p-6">
       <h1 className="text-2xl font-bold mb-4">Shipping details</h1>
-        {/* Street name */}
-        <div className="mb-4">
-          <label htmlFor="street_name" className="mb-2 block text-sm font-medium">
-            Street name (*)
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="street_name"
-                name="street_name"
-                type="text"
-                step="0.01"
-                required
-                placeholder="Enter street name"
-                className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              />
-            </div>
-          </div>
-        </div>
 
-    {/* Street number and zipcode */}
+    {/* Street name and number  */}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      {/* Street name */}
+      <div className="mb-4">
+              <label htmlFor="street_name" className="mb-2 block text-sm font-medium">
+                Street name (*)
+              </label>
+              <div className="relative mt-2 rounded-md">
+                <div className="relative">
+                  <input
+                    id="street_name"
+                    name="street_name"
+                    type="text"
+                    step="0.01"
+                    required
+                    placeholder="Enter street name"
+                    className="peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Street number */}
             <div>
               <label htmlFor="street_number" className="mb-2 block text-sm font-medium">
               Street number (*)
@@ -78,22 +77,6 @@ export default function Form({ cartItems }: { cartItems: CartItem[] }) {
                   placeholder='Enter street number'
                 >
                 </input>
-              </div>
-            </div>
-            <div>
-            <label htmlFor="zip_code"
-              className='mb-2 block text-sm font-medium text-gray-50'>
-              Zip code (*)
-              </label>
-              <div className="w-full">
-              <input
-                  id="zip_code"
-                  name="zip_code"
-                  type="text"
-                  step="0.01"
-                  placeholder="Enter new category"
-                  className='peer block w-full rounded-md bg-black border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500'
-                />
               </div>
             </div>
         </div>
