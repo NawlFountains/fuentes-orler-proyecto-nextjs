@@ -1,14 +1,29 @@
+'use client';
 import { useState } from 'react';
 import { CartItem, Product } from './definitions';
 
 
+const getLocalStorage = () => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    return window.localStorage;
+  } else {
+    console.warn('localStorage is not available. Using fallback.');
+    return {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+    };
+  }
+};
+
+// Example usage
+const localStorage = getLocalStorage();
 export const useCart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>(loadCartFromLocalStorage());
+  let [cartItems, setCartItems] = useState<CartItem[]>(loadCartFromLocalStorage());
 
   const addToCart = (product: Product) => {
-
+    cartItems = loadCartFromLocalStorage();
     let existingCartItem = cartItems.find(item => item.id === product.id);
-
     if (existingCartItem) {
       const updatedCart = cartItems.map(item => {
         if (item.id === product.id) {
@@ -18,7 +33,6 @@ export const useCart = () => {
       });
       setCartItems(updatedCart);
       saveCartToLocalStorage(updatedCart);
-      return;
     } else {
         let newItem = { ...product, quantity: 1 };
         const updatedCart = [...cartItems, newItem];

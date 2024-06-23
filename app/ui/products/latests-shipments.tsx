@@ -21,7 +21,7 @@ export default async function LatestsShipments({shipments} : {shipments: Shippin
                 >
                     <div className="flex items-center justify-between pb-2">
                   </div>
-                  <div className="grid grid-cols-3 items-center  border-b pb-4">
+                  <div className="flex flex-col sm:grid grid-cols-3 items-center  border-b pb-4">
                       <div className="m-2 items-center text-xl font-medium text-center">
                         <p>{shipment.payment_id}</p>
                       </div>

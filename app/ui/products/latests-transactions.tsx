@@ -22,8 +22,8 @@ export default async function LatestsTransactions({transactions} : {transactions
                 >
                     <div className="flex items-center justify-between pb-2">
                   </div>
-                  <div className="grid grid-cols-3 items-center  border-b pb-4">
-                      <div className="m-2 items-center text-xl font-medium text-center col-span-2">
+                  <div className=" flex flex-col sm:grid grid-cols-3 items-center  border-b pb-4">
+                      <div className="m-2 items-center text-sm sm:text-xl font-medium text-center col-span-2">
                         <p>{transaction.payer_email}</p>
                       </div>
                       <div className="col-span-1">
@@ -32,9 +32,9 @@ export default async function LatestsTransactions({transactions} : {transactions
                         </p>
                       </div>
                   </div>
-                  <div className="grid grid-cols-3 items-center  border-b pb-4">
+                  <div className="mt-4 sm:mt-0 flex flex-col sm:grid grid-cols-3 items-center  border-b pb-4">
                       <div className="col-span-2">
-                      <p className="text-xl font-medium text-center">
+                      <p className="text-md sm:text-xl font-medium text-center">
                         {formatTimestamp(transaction.date.toString())}
                       </p>
                     </div>
