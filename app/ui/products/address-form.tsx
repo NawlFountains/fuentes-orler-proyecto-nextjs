@@ -1,8 +1,10 @@
 'use client';
 import { Address, CartItem } from '@/app/lib/definitions';
 import { buyProducts } from '@/app/lib/actions';
+import useCart from '@/app/lib/cartUtils';
 
 export default function Form({ cartItems }: { cartItems: CartItem[] }) {
+  const { clearCart } = useCart();
 
   //Checking not done on server action because couldn't find a way to send cartItems to it
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,6 +30,7 @@ export default function Form({ cartItems }: { cartItems: CartItem[] }) {
       };
   
       await buyProducts(cartItems, shipping_address);
+      clearCart();
     } else {
       // Handle case where required fields are missing
       console.error('Required fields are missing or null');

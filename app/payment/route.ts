@@ -11,6 +11,7 @@ export async function POST(request:NextRequest) {
 
     console.log(payment);
     console.log(payment.additional_info?.items);
+    console.log(payment.additional_info?.shipments?.receiver_address);
     if (payment.additional_info?.items !== undefined) {
         for (const item of payment.additional_info.items) {
             console.log(item);

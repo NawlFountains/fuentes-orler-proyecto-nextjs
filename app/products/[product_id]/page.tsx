@@ -15,8 +15,6 @@ export default async function Page({ params }: { params: { product_id: string } 
   if (!product) {
     notFound();
   }
-  let cartItem = [{...product, quantity: 1}];
-
   return (
     <div className="grid grid-cols-1 mx-5 md:grid-cols-3 gap-8">
       <div className="rounded-xl p-4 md:col-span-2 shadow-lg border border-gray-300 bg-white">
