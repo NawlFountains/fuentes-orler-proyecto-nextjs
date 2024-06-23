@@ -53,33 +53,15 @@ const FormSchema = z.object({
     .gt(0, { message: 'Please enter a price greater than $0.' }),
   description: z.string({
     invalid_type_error: 'Please enter a description.',
-  }).min(1, { message: 'Please enter a description.' }),
+  }).min(1, { message: 'Please enter a description.' })
+    .max(255, { message: 'Please enter a description with less than 255 characters.' }),
   image: imageSchema
-})
-
-const AddressForm = z.object({
-  zip_code: z.string( {
-    invalid_type_error: 'Please enter a zip code.',
-  }).min(1, { message: 'Please enter a zip code.' }),
-  street_name: z.string({
-    invalid_type_error: 'Please enter a street name.',
-  }).min(1, { message: 'Please enter a street name.' }),
-  street_number: z.number({
-    invalid_type_error: 'Please enter a street number.',
-  }) .min(1, { message: 'Please enter a street number.' }),
-  floor: z.string({
-    invalid_type_error: 'Please enter a floor.',
-  }).min(1, { message: 'Please enter a floor.' }),
-  apartment: z.string({
-    invalid_type_error: 'Please enter an apartment.',
-  }).min(1, { message: 'Please enter an apartment.' }),
 })
 
 const CreateProduct = FormSchema.omit({ id: true });
 
 const UpdateProduct = FormSchema.omit({ id: true });
 
-const Checkout = AddressForm.omit({ floor: true, apartment: true });
 
 export type State = {
   errors?: {
