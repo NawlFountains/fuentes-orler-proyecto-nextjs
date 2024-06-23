@@ -40,3 +40,11 @@ export type CartItem = {
   image_url: string;
   quantity: number;
 };
+
+export type Address = {
+  zip_code: string;
+  street_name: string;
+  street_number: number;
+  floor: string | null;
+  apartment: string | null;
+};

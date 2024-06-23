@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { fetchProduct } from '@/app/lib/data';
-import BuyNowButton from '@/app/ui/buy-now';
 import AddCartButton from '@/app/ui/add-cart';
 import { notFound } from 'next/navigation';
 import { isValidId } from '@/app/lib/utils';
@@ -39,11 +38,10 @@ export default async function Page({ params }: { params: { product_id: string } 
           </div>
             <p className="text-base text-gray-600 my-6 leading-relaxed">{product.description}</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 space-y-4">
-          <p className="text-4xl font-semibold text-gray-800 col-span-1 md:col-span-2 text-center">${product.price}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <p className="text-4xl font-semibold text-gray-800 col-span-2 lg:col-span-1 text-center">${product.price}</p>
+          <div className="col-span-2 lg:col-span-1">
             <AddCartButton product={product} />
-            <BuyNowButton products={cartItem} />
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import React from 'react';
 import { useCart } from '../lib/cartUtils';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import BuyNowButton from '../ui/buy-now';
+import AddressForm from '../ui/products/address-form';
 
 const ShoppingCart = () => {
   const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
@@ -16,8 +16,8 @@ const ShoppingCart = () => {
                     <p className="text-white text-xl md:my-4 md:text-3xl">Your cart is empty.</p>
                 </div>
         ) : (
-        <div className="mt-6 flow-root text-white">
-                <div className="inline-block min-w-full align-middle">
+        <div className="mt-6 text-white grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="col-span-2 min-w-full align-middle">
                     <div className="rounded-lg p-2 md:pt-0 border border-gray-200">
                     <div className="md:hidden">
                         {cartItems?.map((item) => (
@@ -134,20 +134,18 @@ const ShoppingCart = () => {
                         </tbody>
                     </table>
                     </div>
+
                 </div>
-                <div className="w-full mt-4">
+                <div className="w-full md:col-span-1 space-y-4">
                         <p className='text-center postition-sticky bottom-0 rounded-md border border-gray-200 p-2'>
                           Total amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}
                           </p>
-                </div>
-                <div className="grid grid-cols-1 space-y-4 md:space-y-0 md:gap-4 md:grid-cols-3 my-4">
-                    <button onClick={clearCart} className="rounded-md w-full text-white font-bold py-2 px-4 bg-black hover:bg-gray-800 focus:bg-gray-800 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-75 shadow-md transition-all duration-300">Clear Cart</button>
-                    <div className = "col-span-2">
-                    <BuyNowButton products={cartItems} />
-                </div>
+                        <AddressForm cartItems={cartItems} />
+
+                        <button onClick={clearCart} className="rounded-md w-full text-white font-bold py-2 px-4 bg-black hover:bg-gray-800 focus:bg-gray-800 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-75 shadow-md transition-all duration-300">Clear Cart</button>
 
                 </div>
-                </div>
+            </div>
         )}
        
     </div>

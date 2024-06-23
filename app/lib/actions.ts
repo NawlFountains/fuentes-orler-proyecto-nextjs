@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import MercadoPagoConfig, { Preference } from 'mercadopago';
-import { CartItem, Product, Transaction } from './definitions';
+import { Address, CartItem, Product, Transaction } from './definitions';
 
 // Require the cloudinary library
 const cloudinary = require('cloudinary').v2;
@@ -57,9 +57,29 @@ const FormSchema = z.object({
   image: imageSchema
 })
 
+const AddressForm = z.object({
+  zip_code: z.string( {
+    invalid_type_error: 'Please enter a zip code.',
+  }).min(1, { message: 'Please enter a zip code.' }),
+  street_name: z.string({
+    invalid_type_error: 'Please enter a street name.',
+  }).min(1, { message: 'Please enter a street name.' }),
+  street_number: z.number({
+    invalid_type_error: 'Please enter a street number.',
+  }) .min(1, { message: 'Please enter a street number.' }),
+  floor: z.string({
+    invalid_type_error: 'Please enter a floor.',
+  }).min(1, { message: 'Please enter a floor.' }),
+  apartment: z.string({
+    invalid_type_error: 'Please enter an apartment.',
+  }).min(1, { message: 'Please enter an apartment.' }),
+})
+
 const CreateProduct = FormSchema.omit({ id: true });
 
 const UpdateProduct = FormSchema.omit({ id: true });
+
+const Checkout = AddressForm.omit({ floor: true, apartment: true });
 
 export type State = {
   errors?: {
@@ -259,7 +279,7 @@ export async function createProduct(prevState: State, formData: FormData) {
 
   const client = new MercadoPagoConfig({accessToken: process.env.MP_ACCESS_TOKEN!});
 
-  export async function buyProducts(products:CartItem []) {
+  export async function buyProducts(products:CartItem [], shippingAddress : Address) {
     const preference = await new Preference(client).create({
         body: {
           items: products.map(product => ({
@@ -274,6 +294,15 @@ export async function createProduct(prevState: State, formData: FormData) {
             "success": process.env.NEXT_PUBLIC_APP_URL + "/search",
             "failure": process.env.NEXT_PUBLIC_APP_URL + "/search",
             "pending": process.env.NEXT_PUBLIC_APP_URL + "/search"
+          },
+          shipments: {
+            receiver_address: {
+              zip_code: shippingAddress.zip_code,
+              street_number: shippingAddress.street_number,
+              street_name: shippingAddress.street_name,
+              ...(shippingAddress.floor && { floor: shippingAddress.floor }),
+              ...(shippingAddress.apartment && { apartment: shippingAddress.apartment }),
+            },
           },
   
           auto_return: "approved"

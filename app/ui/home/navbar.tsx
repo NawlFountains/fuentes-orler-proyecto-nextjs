@@ -1,4 +1,4 @@
-import NavLinks from '@/app/ui/dashboard/nav-links';
+import NavLinks from '@/app/ui/home/nav-links';
 import StoreLogo from '@/app/ui/store-logo';
 import { PowerIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { auth, signOut } from '@/auth';

@@ -1,5 +1,5 @@
 import { fetchHomeProducts } from '@/app/lib/data';
-import { CarouselTransition } from '../ui/dashboard/carousel';
+import { CarouselTransition } from '../ui/home/carousel';
 import { Product } from '../lib/definitions';
 
 const NUMBER_OF_PRODUCTS = 5;
