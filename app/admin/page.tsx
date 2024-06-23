@@ -35,13 +35,17 @@ export default async function Page({searchParams,} : {searchParams?: {
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-        <Suspense fallback={<ProductsTableSkeleton />}>
-          <LatestsTransactions transactions={transactions} />
-        </Suspense>
-        <Suspense fallback={<ProductsTableSkeleton />}>
-          <LatestsShipments shipments={shipments} />
-        </Suspense>
+      <div className="grid w-full grid-cols-1 gap-4">
+        <div className=" col-span-1 ">
+          <Suspense fallback={<ProductsTableSkeleton />}>
+            <LatestsTransactions transactions={transactions} />
+          </Suspense>
+          </div>
+        <div className="col-span-1">
+          <Suspense fallback={<ProductsTableSkeleton />}>
+            <LatestsShipments shipments={shipments} />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

@@ -190,7 +190,7 @@ export async function fetchLatestShipments(amount: number) {
       ORDER BY created_at DESC
       LIMIT ${amount}
       `;
-      const shipments : ShippingDetails [] = data.rows.map((shipment: any) => ({
+      const shipments : any [] = data.rows.map((shipment: any) => ({
         ...shipment,
       }))
       return shipments;
